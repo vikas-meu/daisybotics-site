@@ -1,9 +1,10 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Daisy Botics | Robotics Courses and Robots by Vikas Singh Thakur</title>
+<meta name="description" content="Daisy Botics: affordable robots, project-first robotics courses and live build sessions by Vikas Singh Thakur, robotics engineer from Raipur, India.">
 <link rel="canonical" href="https://daisybotics.com/">
 <meta name="keywords" content="Daisy Botics, Daisybotics, robotics courses, learn robotics India, ROS2 course, computer vision robotics, Arduino, Raipur, Vikas Singh Thakur">
 <meta property="og:type" content="website">
@@ -11,17 +12,18 @@
 <meta property="og:title" content="Daisy Botics | Robotics courses and robots by Vikas Singh Thakur">
 <meta property="og:description" content="Affordable robots, project-first robotics courses and live build sessions. 19 hackathon wins, 2 patents granted.">
 <meta property="og:url" content="https://daisybotics.com/">
-<meta property="og:image" content="https://daisybotics.com/assets/skull3.jpg">
+<meta property="og:image" content="https://daisybotics.com/assets/rig2.jpg">
 <meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-50 -50 100 100'%3E%3Cg fill='%23ffcf3d'%3E%3Cellipse cy='-24' rx='14' ry='22'/%3E%3Cellipse cy='-24' rx='14' ry='22' transform='rotate(72)'/%3E%3Cellipse cy='-24' rx='14' ry='22' transform='rotate(144)'/%3E%3Cellipse cy='-24' rx='14' ry='22' transform='rotate(216)'/%3E%3Cellipse cy='-24' rx='14' ry='22' transform='rotate(288)'/%3E%3C/g%3E%3Ccircle r='12' fill='%23ff8b24'/%3E%3C/svg%3E">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[
- {"@type":"Organization","name":"Daisy Botics","url":"https://daisybotics.com/","logo":"https://daisybotics.com/assets/skull3.jpg","founder":{"@id":"#vikas"},
+ {"@type":"Organization","name":"Daisy Botics","url":"https://daisybotics.com/","logo":"https://daisybotics.com/assets/rig2.jpg","founder":{"@id":"https://daisybotics.com/#vikas"},
   "sameAs":["https://www.youtube.com/@Pi-kas","https://github.com/vikas-meu","https://www.linkedin.com/in/vikas0singh0thakur","https://instagram.com/raspikash"]},
- {"@type":"Person","@id":"#vikas","name":"Vikas Singh Thakur","jobTitle":"Robotics Engineer","url":"https://daisybotics.com/","address":{"@type":"PostalAddress","addressLocality":"Raipur","addressRegion":"Chhattisgarh","addressCountry":"IN"},
+ {"@type":"Person","@id":"https://daisybotics.com/#vikas","name":"Vikas Singh Thakur","jobTitle":"Robotics Engineer","url":"https://daisybotics.com/",
+  "address":{"@type":"PostalAddress","addressLocality":"Raipur","addressRegion":"Chhattisgarh","addressCountry":"IN"},
   "sameAs":["https://github.com/vikas-meu","https://www.linkedin.com/in/vikas0singh0thakur","https://www.youtube.com/@Pi-kas","https://x.com/vikash_sin15940"]}
 ]}
 </script>
-<meta name="description" content="Daisy Botics — robots, courses and live build sessions by Vikas Singh Thakur, robotics engineer from Raipur.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloock&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=VT323&display=swap">
@@ -37,6 +39,10 @@
   --petal:#fbeef4;      /* daisy petal */
   --core:#f3b866;       /* daisy core gold, the one accent */
   --rose:#ec93b8;       /* blush, used sparingly */
+  --sun:#ffcf3d;        /* printed-flower yellow, from the workshop robots */
+  --tang:#ff8b24;       /* printed-flower orange */
+  --alu1:#e4dff2;--alu2:#b2aacb;--alu3:#8a82a9;   /* brushed-metal pod */
+  --lcd1:#2b1f10;--lcd2:#160f07;--engrave:#3d3558;
   --f-display:"Gloock", "Georgia", serif;
   --f-body:"Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
   --f-crt:"VT323", "Courier New", monospace;
@@ -61,6 +67,7 @@ p{margin:0}
 .crt{font-family:var(--f-crt);font-size:1.2rem;line-height:1.15;color:var(--core);letter-spacing:.02em}
 .lede{color:var(--haze);max-width:60ch;font-size:1.08rem}
 section{padding-block:clamp(64px,10vw,120px)}
+main [id]{scroll-margin-top:84px}
 .sec-head{display:grid;gap:14px;margin-bottom:44px;max-width:720px}
 
 /* buttons */
@@ -232,6 +239,160 @@ section{padding-block:clamp(64px,10vw,120px)}
 
 footer{padding-block:40px 56px;color:var(--haze);font-size:.9rem}
 footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
+
+/* ---------- welcome intro: a garden world + the Daisy Pod ---------- */
+body.locked{overflow:hidden}
+.intro{position:fixed;inset:0;z-index:100;overflow:hidden;background:var(--night);transition:opacity 1s ease,visibility 1s}
+.intro.leaving{opacity:0;visibility:hidden}
+#world{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:manipulation}
+.intro-ui{position:relative;z-index:2;height:100%;overflow-y:auto;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:clamp(24px,5vw,72px);
+  max-width:1180px;margin:0 auto;padding:calc(28px + env(safe-area-inset-top,0px)) clamp(16px,4vw,40px) calc(28px + env(safe-area-inset-bottom,0px));pointer-events:none}
+.intro-ui > *{pointer-events:auto}
+.intro-copy{display:grid;gap:16px;max-width:520px;text-shadow:0 2px 24px rgba(20,13,34,.9)}
+.intro-copy h1{font-size:clamp(2.6rem,7vw,5.4rem);line-height:.98}
+.intro-lede{color:var(--bone);font-size:1.1rem;max-width:44ch}
+.intro-hint{color:var(--haze);font-size:.92rem}
+.intro-hint b{color:var(--sun);font-weight:700}
+
+/* the device */
+.pod{position:relative;width:300px;max-width:100%;padding:22px 22px 16px;border-radius:40px;display:grid;gap:16px;justify-items:center;
+  background:repeating-linear-gradient(90deg,rgba(255,255,255,.035) 0 1px,transparent 1px 3px),linear-gradient(160deg,var(--alu1),var(--alu2) 48%,var(--alu3));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.7),inset 0 -3px 8px rgba(30,20,50,.35),0 0 0 1px rgba(20,13,34,.35),0 50px 90px -30px rgba(0,0,0,.85),0 0 120px -30px color-mix(in srgb,var(--sun) 40%,transparent);
+  animation:podIn 1s cubic-bezier(.2,1.2,.4,1) .2s both}
+@keyframes podIn{from{transform:translateY(40px) rotate(4deg);opacity:0}}
+.screw{position:absolute;width:10px;height:10px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#f4f1fb,#8f86ad);box-shadow:inset 0 -1px 1px rgba(0,0,0,.4)}
+.screw::after{content:"";position:absolute;left:2px;right:2px;top:4px;height:2px;background:rgba(40,30,60,.55);border-radius:1px;transform:rotate(var(--r,35deg))}
+.screw.s1{top:14px;left:16px}.screw.s2{top:14px;right:16px;--r:-20deg}.screw.s3{bottom:14px;left:16px;--r:70deg}.screw.s4{bottom:14px;right:16px;--r:10deg}
+.pod-screen{position:relative;width:100%;border-radius:14px;padding:11px 14px 10px;overflow:hidden;display:grid;gap:3px;
+  background:linear-gradient(180deg,var(--lcd1),var(--lcd2));box-shadow:inset 0 2px 10px rgba(0,0,0,.85),0 1px 0 rgba(255,255,255,.5);
+  font-family:var(--f-crt);color:var(--sun);text-shadow:0 0 6px color-mix(in srgb,var(--sun) 65%,transparent)}
+.pod-screen::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(transparent 0 2px,rgba(0,0,0,.22) 2px 3px);pointer-events:none}
+.ps-top,.ps-meta{display:flex;justify-content:space-between;align-items:center;font-size:1rem;opacity:.85}
+.ps-mood{font-size:2.1rem;line-height:1}
+.ps-eq{display:flex;gap:2px;align-items:flex-end;height:14px}
+.ps-eq i{display:block;width:4px;height:20%;background:var(--sun)}
+.pod.playing .ps-eq i{animation:eq .7s ease-in-out infinite alternate}
+.pod.playing .ps-eq i:nth-child(2n){animation-duration:.45s}.pod.playing .ps-eq i:nth-child(3n){animation-duration:.9s}
+.ps-hint{font-size:.98rem;opacity:.8;min-height:1.1em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pod.waiting .ps-hint{animation:blink 1.2s steps(2) infinite}
+@keyframes blink{50%{opacity:.25}}
+
+.wheel{position:relative;width:228px;height:228px;border-radius:50%;touch-action:none;cursor:grab;outline-offset:6px;
+  background:radial-gradient(circle at 50% 32%,#f3f0fb,#cdc6e2 58%,#b0a8ca);
+  box-shadow:inset 0 2px 3px rgba(255,255,255,.95),inset 0 -8px 16px rgba(60,40,90,.35),0 2px 0 rgba(20,13,34,.18),0 12px 24px -10px rgba(0,0,0,.55)}
+.wheel.grabbing{cursor:grabbing}
+.wheel-grip{position:absolute;inset:8px;border-radius:50%;pointer-events:none;transition:transform .35s cubic-bezier(.3,1.6,.5,1);
+  background:repeating-conic-gradient(from 0deg,rgba(60,40,90,.16) 0 1.5deg,transparent 1.5deg 9deg);
+  -webkit-mask:radial-gradient(circle,transparent 57%,#000 58%,#000 74%,transparent 75%);mask:radial-gradient(circle,transparent 57%,#000 58%,#000 74%,transparent 75%)}
+.wl{position:absolute;display:flex;align-items:center;gap:5px;background:none;border:0;padding:8px;cursor:pointer;
+  font:700 .66rem var(--f-body);letter-spacing:.14em;color:var(--engrave);text-shadow:0 1px 0 rgba(255,255,255,.7)}
+.wl.n{top:6px;left:50%;transform:translateX(-50%);flex-direction:column-reverse}
+.wl.s{bottom:6px;left:50%;transform:translateX(-50%);flex-direction:column}
+.wl.e{right:2px;top:50%;transform:translateY(-50%);flex-direction:column}
+.wl.w{left:2px;top:50%;transform:translateY(-50%);flex-direction:column}
+.led{width:7px;height:7px;border-radius:50%;background:#8a81a6;box-shadow:inset 0 1px 1px rgba(0,0,0,.45)}
+.wl[aria-pressed="true"]{color:#221a38}
+.wl[aria-pressed="true"] .led{background:var(--tang);box-shadow:0 0 9px var(--tang),inset 0 0 2px #fff}
+.hub{position:absolute;left:50%;top:50%;width:94px;height:94px;margin:-47px 0 0 -47px;border-radius:50%;border:0;cursor:pointer;display:grid;place-items:center;align-content:center;gap:1px;
+  background:radial-gradient(circle at 50% 28%,#fff8da,var(--sun) 52%,#eeae1c);
+  box-shadow:inset 0 2px 2px rgba(255,255,255,.95),inset 0 -5px 9px rgba(150,80,0,.35),0 5px 0 #c4850f,0 10px 18px -4px rgba(0,0,0,.5);
+  transition:transform .09s,box-shadow .09s}
+.hub::after{content:"";position:absolute;inset:-7px;border-radius:50%;border:2px solid color-mix(in srgb,var(--sun) 70%,transparent);opacity:0;animation:ring 2.4s ease-out 2.2s infinite}
+@keyframes ring{0%{transform:scale(.92);opacity:.9}100%{transform:scale(1.35);opacity:0}}
+.hub:active,.hub.pressed{transform:translateY(4px);box-shadow:inset 0 2px 2px rgba(255,255,255,.8),inset 0 -3px 6px rgba(150,80,0,.35),0 1px 0 #c4850f,0 4px 8px -2px rgba(0,0,0,.5)}
+.hub svg{width:42px;height:42px}
+.hub span{font:700 .6rem var(--f-body);letter-spacing:.2em;color:#7a4700}
+.pod-row{display:flex;justify-content:space-between;align-items:center;width:100%;padding-inline:4px}
+.toggle{display:flex;align-items:center;gap:9px;background:none;border:0;cursor:pointer;padding:4px;font:700 .66rem var(--f-body);letter-spacing:.14em;color:var(--engrave);text-shadow:0 1px 0 rgba(255,255,255,.6)}
+.toggle .track{position:relative;width:50px;height:26px;border-radius:999px;background:linear-gradient(180deg,#554c73,#7a7197);box-shadow:inset 0 2px 5px rgba(0,0,0,.55);transition:background .2s}
+.toggle .knob{position:absolute;top:2px;left:2px;width:22px;height:22px;border-radius:50%;background:radial-gradient(circle at 38% 30%,#fff,#dcd6ec 60%,#a39bbf);box-shadow:0 2px 3px rgba(0,0,0,.45);transition:transform .22s cubic-bezier(.3,1.6,.5,1)}
+.toggle[aria-checked="true"] .track{background:linear-gradient(180deg,#d26a12,var(--tang))}
+.toggle[aria-checked="true"] .knob{transform:translateX(24px)}
+.toggle .ledg{width:8px;height:8px;border-radius:50%;background:#6c6388;box-shadow:inset 0 1px 1px rgba(0,0,0,.4)}
+.toggle[aria-checked="true"] .ledg{background:#86ffa3;box-shadow:0 0 8px #86ffa3}
+.pod-skip{background:none;border:0;cursor:pointer;padding:4px;font:700 .66rem var(--f-body);letter-spacing:.14em;color:var(--engrave);text-decoration:underline;text-underline-offset:3px}
+.plate{font:700 .56rem var(--f-body);letter-spacing:.3em;color:rgba(40,30,62,.55);text-shadow:0 1px 0 rgba(255,255,255,.55)}
+@media (max-width:820px){
+  .intro-ui{grid-template-columns:1fr;justify-items:center;align-content:start;text-align:center;gap:20px}
+  .intro-copy{justify-items:center}
+  .intro-copy h1{font-size:clamp(2.3rem,11vw,3.4rem)}
+  .intro-lede{font-size:1rem}
+}
+@media (max-height:700px) and (min-width:821px){.pod{transform:scale(.88);transform-origin:center}}
+@media (prefers-reduced-motion:reduce){.pod{animation:none}.hub::after{animation:none}}
+
+/* ---------- music dock ---------- */
+.dock{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:45;display:flex;align-items:center;gap:12px;
+  padding:7px 14px 7px 7px;border-radius:999px;background:color-mix(in srgb,var(--dusk) 90%,transparent);border:1px solid var(--mist);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 12px 30px -12px #000;max-width:calc(100% - 32px)}
+.dock .play{width:40px;height:40px;flex:none;border-radius:50%;border:0;background:var(--sun);display:grid;place-items:center;cursor:pointer}
+.dock .play svg{width:16px;height:16px}
+.dock-meta{display:grid;line-height:1.1;min-width:0}
+.dock-meta .crt{font-size:1.1rem;color:var(--petal);white-space:nowrap}
+.dock-meta small{font-size:.72rem;color:var(--haze);white-space:nowrap}
+.eq{display:flex;gap:2px;align-items:flex-end;height:16px;flex:none}
+.eq i{display:block;width:3px;height:25%;background:var(--sun);border-radius:1px}
+.dock.on .eq i{animation:eq .8s ease-in-out infinite alternate}
+.dock.on .eq i:nth-child(2){animation-duration:.55s}.dock.on .eq i:nth-child(3){animation-duration:.95s}.dock.on .eq i:nth-child(4){animation-duration:.65s}
+@keyframes eq{from{height:20%}to{height:100%}}
+.dock select{background:var(--night);color:var(--bone);border:1px solid var(--mist);border-radius:8px;padding:5px 6px;font:400 .85rem var(--f-body);max-width:110px}
+.dock input[type=range]{width:80px;accent-color:var(--sun)}
+@media (max-width:560px){.dock input[type=range],.dock-meta small{display:none}}
+
+/* ---------- workshop photos ---------- */
+.workshop .wrap{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,6vw,80px);align-items:center}
+.workshop .copy{display:grid;gap:18px;min-width:0}
+.workshop .copy p{color:var(--haze);max-width:58ch}
+.pics{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+.pics figure{margin:0;border-radius:20px;overflow:hidden;background:var(--dusk);box-shadow:0 30px 70px -25px #000}
+.pics figure:nth-child(2){margin-top:56px}
+.pics img{width:100%;aspect-ratio:9/14;object-fit:cover}
+.pics .badge{position:absolute;left:-12px;top:-14px;width:64px;height:64px;transform:rotate(-12deg);filter:drop-shadow(0 6px 14px rgba(0,0,0,.5))}
+.flower-row{display:flex;gap:10px;align-items:center;color:var(--sun);font:400 1.15rem var(--f-crt)}
+.flower-row svg{width:26px;height:26px}
+@media (max-width:820px){.workshop .wrap{grid-template-columns:1fr}.pics{max-width:460px}}
+.nav .btn.hi{background:var(--petal)}
+/* ---------- nav dropdowns ---------- */
+.nav-links .dd{position:relative}
+.dd-btn{display:flex;align-items:center;gap:6px;background:none;border:0;color:var(--haze);font:400 .95rem var(--f-body);cursor:pointer;padding:6px 0}
+.dd-btn:hover,.dd.open .dd-btn{color:var(--petal)}
+.chev{width:12px;height:12px;transition:transform .25s}
+.dd.open .chev{transform:rotate(180deg)}
+.dd-menu{position:absolute;top:calc(100% + 14px);left:50%;z-index:50;min-width:290px;display:grid;gap:2px;padding:12px;border-radius:18px;
+  background:color-mix(in srgb,var(--dusk) 97%,transparent);border:1px solid var(--mist);box-shadow:0 26px 60px -20px #000;
+  opacity:0;visibility:hidden;transform:translate(-50%,10px) scale(.98);transform-origin:top center;
+  transition:opacity .2s,transform .28s cubic-bezier(.3,1.5,.5,1),visibility .2s}
+.dd-menu::before{content:"";position:absolute;left:0;right:0;top:-16px;height:16px}
+.dd-menu.wide{grid-template-columns:1fr 1fr;min-width:540px}
+.dd-menu.right{left:auto;right:-12px;transform:translateY(10px) scale(.98);transform-origin:top right}
+.dd.open .dd-menu{opacity:1;visibility:visible;transform:translate(-50%,0)}
+.dd.open .dd-menu.right{transform:none}
+@media (hover:hover) and (min-width:881px){
+  .dd:hover .dd-menu{opacity:1;visibility:visible;transform:translate(-50%,0)}
+  .dd:hover .dd-menu.right{transform:none}
+  .dd:hover .chev{transform:rotate(180deg)}
+  .dd:hover .dd-btn{color:var(--petal)}
+}
+.dd-label{grid-column:1/-1;font-size:1.05rem;padding:2px 10px 6px}
+.nav-links .dd-menu a{display:grid;gap:1px;padding:9px 10px;border-radius:10px;text-decoration:none;font-size:inherit}
+.dd-menu a b{color:var(--petal);font-weight:700;font-size:.93rem}
+.dd-menu a small{color:var(--haze);font-size:.8rem;line-height:1.35}
+.dd-menu a:hover,.dd-menu a:focus-visible{background:var(--mist)}
+.dd-menu a:hover b,.dd-menu a:focus-visible b{color:var(--sun)}
+.dd-menu a.ext b::after{content:" ↗";color:var(--haze);font-weight:400}
+@media (max-width:880px){
+  .dd-btn{width:100%;justify-content:space-between;padding:12px 0;font-size:1.05rem}
+  .dd-menu,.dd-menu.wide,.dd-menu.right{position:static;min-width:0;grid-template-columns:1fr;display:none;opacity:1;visibility:visible;transform:none;
+    box-shadow:none;border:0;border-left:2px solid var(--mist);border-radius:0;background:none;padding:0 0 10px 12px;margin-left:2px}
+  .dd.open .dd-menu,.dd.open .dd-menu.right{display:grid;transform:none}
+  .dd-menu::before{display:none}
+  .nav-links{max-height:calc(100vh - 70px);overflow-y:auto}
+}
+/* corner player switch */
+.dock .toggle{padding:0}
+.dock .toggle .track{width:46px;height:24px}
+.dock .toggle .knob{width:20px;height:20px}
+.dock .toggle[aria-checked="true"] .knob{transform:translateX(22px)}
 </style>
 </head>
 <body>
@@ -251,22 +412,128 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
       <circle cx="20" cy="20" r="6" fill="#f3b866"/>
       <circle cx="20" cy="20" r="2.2" fill="#ec93b8"/>
     </symbol>
+    <symbol id="bloom" viewBox="-50 -50 100 100">
+      <g fill="#ffcf3d">
+        <ellipse cy="-24" rx="14" ry="22"/>
+        <ellipse cy="-24" rx="14" ry="22" transform="rotate(72)"/>
+        <ellipse cy="-24" rx="14" ry="22" transform="rotate(144)"/>
+        <ellipse cy="-24" rx="14" ry="22" transform="rotate(216)"/>
+        <ellipse cy="-24" rx="14" ry="22" transform="rotate(288)"/>
+      </g>
+      <circle r="12" fill="#ff8b24"/>
+    </symbol>
+    <symbol id="bloom-o" viewBox="-50 -50 100 100">
+      <g fill="#ff8b24">
+        <ellipse cy="-24" rx="14" ry="22"/>
+        <ellipse cy="-24" rx="14" ry="22" transform="rotate(72)"/>
+        <ellipse cy="-24" rx="14" ry="22" transform="rotate(144)"/>
+        <ellipse cy="-24" rx="14" ry="22" transform="rotate(216)"/>
+        <ellipse cy="-24" rx="14" ry="22" transform="rotate(288)"/>
+      </g>
+      <circle r="12" fill="#fff4c2"/>
+    </symbol>
   </defs>
 </svg>
 
+<div class="intro" id="intro" role="dialog" aria-modal="true" aria-labelledby="intro-title">
+  <canvas id="world" aria-hidden="true"></canvas>
+  <div class="intro-ui">
+    <div class="intro-copy">
+      <span class="crt">&gt; daisy os v2.6</span>
+      <h1 id="intro-title">Welcome to Daisy Botics</h1>
+      <p class="intro-lede">A little world where robots grow flowers. Turn the wheel to pick a soundtrack, then press the flower to step inside.</p>
+      <p class="intro-hint"><b>Tap the grass</b> to plant a daisy. <b>Tap a robot</b> to say hi.</p>
+    </div>
+    <div class="pod waiting" id="pod" role="group" aria-label="Daisy Pod music player">
+      <span class="screw s1"></span><span class="screw s2"></span><span class="screw s3"></span><span class="screw s4"></span>
+      <div class="pod-screen" aria-live="polite">
+        <div class="ps-top"><span>DAISY POD</span><span id="ps-sound">SOUND ON</span></div>
+        <div class="ps-mood" id="ps-mood">Ambient</div>
+        <div class="ps-meta"><span id="ps-bpm">60 BPM · NO DRUMS</span><span class="ps-eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
+        <div class="ps-hint" id="ps-hint">&gt; tap to start sound</div>
+      </div>
+      <div class="wheel" id="wheel" tabindex="0" aria-label="Soundtrack wheel. Use arrow keys to change, Enter to step inside.">
+        <div class="wheel-grip" id="wheel-grip"></div>
+        <button class="wl n" type="button" data-mood="ambient" aria-pressed="true"><span>AMBIENT</span><span class="led"></span></button>
+        <button class="wl e" type="button" data-mood="lofi" aria-pressed="false"><span>LO-FI</span><span class="led"></span></button>
+        <button class="wl s" type="button" data-mood="hiphop" aria-pressed="false"><span class="led"></span><span>HIP HOP</span></button>
+        <button class="wl w" type="button" data-mood="synth" aria-pressed="false"><span>SYNTH</span><span class="led"></span></button>
+        <button class="hub" id="enter-btn" type="button" aria-label="Enter the site"><svg><use href="#bloom-o"/></svg><span>ENTER</span></button>
+      </div>
+      <div class="pod-row">
+        <button class="toggle" id="sound-toggle" type="button" role="switch" aria-checked="true"><span class="track"><span class="knob"></span></span>SOUND<span class="ledg"></span></button>
+        <button class="pod-skip" type="button" id="skip-btn">SKIP INTRO</button>
+      </div>
+      <span class="plate">DAISY BOTICS · MODEL DB-01</span>
+    </div>
+  </div>
+</div>
+
+<div class="dock" id="dock" hidden>
+  <button class="toggle" id="dock-toggle" type="button" role="switch" aria-checked="true" aria-label="Turn music off"><span class="track"><span class="knob"></span></span></button>
+  <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+  <div class="dock-meta"><span class="crt" id="dock-name">Ambient</span><small id="dock-state">Music on · press M to mute</small></div>
+  <label for="dock-select" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Change music</label>
+  <select id="dock-select">
+    <option value="ambient">Ambient</option><option value="lofi">Lo-fi</option><option value="hiphop">Hip hop</option><option value="synth">Synthwave</option>
+  </select>
+  <input type="range" id="dock-vol" min="0" max="1" step="0.01" value="0.55" aria-label="Volume">
+</div>
+
 <nav class="nav" aria-label="Main">
   <div class="wrap">
-    <a class="brand" href="#top"><svg><use href="#daisy"/></svg>Daisy Botics</a>
+    <a class="brand" href="#top"><svg><use href="#bloom"/></svg>Daisy Botics</a>
     <button class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="nav-links">Menu</button>
     <ul class="nav-links" id="nav-links">
-      <li><a href="#work">Work</a></li>
-      <li><a href="#courses">Courses</a></li>
-      <li><a href="#achievements">Achievements</a></li>
-      <li><a href="#channels">YouTube &amp; GitHub</a></li>
-      <li><a href="#about">About</a></li>
-      <li class="mob-login"><a href="login.html">Log in</a></li>
+      <li class="dd"><button class="dd-btn" type="button" aria-expanded="false" aria-controls="dd-work">Work<svg class="chev" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+        <div class="dd-menu wide" id="dd-work">
+          <span class="dd-label crt">&gt; ls ~/robots</span>
+          <a href="#work" data-filter="all"><b>All robots</b><small>12 builds that left the bench</small></a>
+          <a href="#work" data-filter="field"><b>Field &amp; agri</b><small>Sprayers, weeders, plant monitors</small></a>
+          <a href="#work" data-filter="humanoid"><b>Humanoids &amp; arms</b><small>Teleop, motion mimicry, teach mode</small></a>
+          <a href="#work" data-filter="vision"><b>Autonomy &amp; vision</b><small>Swarms, serving robots, pick &amp; place</small></a>
+          <a href="#work" data-filter="water"><b>Underwater</b><small>Robotic fish, bladeless submarine</small></a>
+          <a href="#workshop"><b>In the workshop</b><small>The flower camera rig</small></a>
+          <a href="#bench"><b>On the bench</b><small>What's being built right now</small></a>
+        </div></li>
+      <li class="dd"><button class="dd-btn" type="button" aria-expanded="false" aria-controls="dd-courses">Courses<svg class="chev" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+        <div class="dd-menu" id="dd-courses">
+          <span class="dd-label crt">&gt; ./learn</span>
+          <a href="#course-zero"><b>Robotics from zero</b><small>Level 1 · Arduino, motors, sensors</small></a>
+          <a href="#course-cv"><b>Computer vision for robots</b><small>Level 2 · OpenCV, ArUco, MediaPipe</small></a>
+          <a href="#course-ros"><b>ROS2 &amp; navigation</b><small>Level 3 · URDF, SLAM, Nav2</small></a>
+          <a href="#course-ai"><b>AI brains on the edge</b><small>Level 4 · Jetson, local LLMs, voice</small></a>
+          <a href="#live"><b>Live build sessions</b><small>Build along, announced on Discord</small></a>
+        </div></li>
+      <li class="dd"><button class="dd-btn" type="button" aria-expanded="false" aria-controls="dd-ach">Achievements<svg class="chev" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+        <div class="dd-menu" id="dd-ach">
+          <span class="dd-label crt">&gt; cat achievements.log</span>
+          <a href="#ach-grant"><b>₹15 Lakh MSME grant</b><small>Government innovation funding, 2025</small></a>
+          <a href="#ach-patents"><b>Patents</b><small>2 granted, 3 pending</small></a>
+          <a href="#ach-hack"><b>19 hackathon wins</b><small>Out of 29, incl. IIT Madras twice</small></a>
+          <a href="#achievements"><b>Full timeline</b><small>Drone licence, research paper and more</small></a>
+          <a class="ext" href="https://drive.google.com/file/d/1Ef-v5HMM9hIanayX-EOzBuvmYxq6tG68/view" target="_blank" rel="noopener"><b>Detailed CV</b><small>Opens the PDF on Google Drive</small></a>
+        </div></li>
+      <li class="dd"><button class="dd-btn" type="button" aria-expanded="false" aria-controls="dd-ch">YouTube &amp; GitHub<svg class="chev" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+        <div class="dd-menu" id="dd-ch">
+          <span class="dd-label crt">&gt; follow --everywhere</span>
+          <a href="#channels"><b>Channels overview</b><small>Videos, code and stats in one place</small></a>
+          <a class="ext" href="https://www.youtube.com/@Pi-kas" target="_blank" rel="noopener"><b>YouTube</b><small>Vikas Like Robots · @Pi-kas</small></a>
+          <a class="ext" href="https://github.com/vikas-meu" target="_blank" rel="noopener"><b>GitHub</b><small>54 repositories · vikas-meu</small></a>
+          <a class="ext" href="https://github.com/vikas-meu/Daisy_Blocks_final" target="_blank" rel="noopener"><b>Daisy Blocks repo</b><small>VR-controlled servo cubes</small></a>
+          <a class="ext" href="https://discord.com/invite/r7DY9augb9" target="_blank" rel="noopener"><b>Discord community</b><small>Live sessions and help</small></a>
+        </div></li>
+      <li class="dd"><button class="dd-btn" type="button" aria-expanded="false" aria-controls="dd-about">About<svg class="chev" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+        <div class="dd-menu right" id="dd-about">
+          <span class="dd-label crt">&gt; whoami</span>
+          <a href="#about"><b>My story</b><small>Why daisies, on a robotics site</small></a>
+          <a href="#contact"><b>Contact</b><small>Collabs, workshops, custom robots</small></a>
+          <a class="ext" href="https://www.linkedin.com/in/vikas0singh0thakur" target="_blank" rel="noopener"><b>LinkedIn</b><small>vikas0singh0thakur</small></a>
+          <a class="ext" href="https://instagram.com/raspikash" target="_blank" rel="noopener"><b>Instagram</b><small>@raspikash</small></a>
+        </div></li>
+      <li class="mob-login"><a href="login.html" id="mob-login">Log in</a></li>
     </ul>
-    <a class="btn btn-gold" href="login.html">Log in</a>
+    <a class="btn btn-gold" href="login.html" id="nav-login">Log in</a>
   </div>
 </nav>
 
@@ -310,6 +577,23 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
 </div>
 
 <main>
+<section class="workshop" id="workshop">
+  <div class="wrap">
+    <div class="copy">
+      <span class="crt">&gt; open ~/workshop</span>
+      <h2>Every robot here wears a flower</h2>
+      <p>This is a vertical-lift camera rig, fresh off the printer. A depth camera rides a geared rack up an aluminium rail, wired through spiral wrap and tucked into a 3D-printed control box.</p>
+      <p>The flower on the camera and the box is the Daisy Botics mark. Robots can look friendly, and so can learning to build them.</p>
+      <div class="flower-row"><svg><use href="#bloom"/></svg>&gt; 3D printed · rack-and-pinion lift · depth camera</div>
+    </div>
+    <div class="pics">
+      <svg class="badge" aria-hidden="true"><use href="#bloom"/></svg>
+      <figure><img src="assets/rig2.jpg" alt="Front view of the camera rig: an orange depth-camera housing with a yellow flower, above a yellow control box with an orange flower" loading="lazy"></figure>
+      <figure><img src="assets/rig1.jpg" alt="Side view of the rig showing the depth camera on white struts and a geared carriage on the vertical rail" loading="lazy"></figure>
+    </div>
+  </div>
+</section>
+
 <section id="work">
   <div class="wrap">
     <div class="sec-head">
@@ -326,7 +610,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
     </div>
     <div class="grid" id="grid"></div>
 
-    <div class="bench">
+    <div class="bench" id="bench">
       <div>
         <span class="crt">&gt; on the bench</span>
         <h3 style="margin-top:8px">Being built right now</h3>
@@ -349,28 +633,28 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
       <p class="lede">Project-first courses taught from the same bench these robots came off. Each one ends with a working machine you built yourself.</p>
     </div>
     <div class="courses">
-      <article class="course">
+      <article class="course" id="course-zero">
         <span class="lvl">Level 1 · beginner</span>
         <h3>Robotics from zero</h3>
         <p>Your first moving robot, without the fear.</p>
         <ul><li>Arduino &amp; ESP32 basics</li><li>Motors, servos, sensors</li><li>Build a line-following car</li></ul>
         <span class="status">Opening soon</span>
       </article>
-      <article class="course">
+      <article class="course" id="course-cv">
         <span class="lvl">Level 2 · vision</span>
         <h3>Computer vision for robots</h3>
         <p>Teach a robot to see and react.</p>
         <ul><li>OpenCV &amp; HSV tracking</li><li>ArUco markers &amp; pose</li><li>MediaPipe teleoperation</li></ul>
         <span class="status">Opening soon</span>
       </article>
-      <article class="course">
+      <article class="course" id="course-ros">
         <span class="lvl">Level 3 · autonomy</span>
         <h3>ROS2 &amp; navigation</h3>
         <p>From a URDF to a robot that drives itself.</p>
         <ul><li>ROS2, ros2_control, URDF</li><li>SLAM &amp; Nav2</li><li>micro-ROS on microcontrollers</li></ul>
         <span class="status">Opening soon</span>
       </article>
-      <article class="course">
+      <article class="course" id="course-ai">
         <span class="lvl">Level 4 · edge AI</span>
         <h3>AI brains on the edge</h3>
         <p>Local LLMs and voice, running on the robot.</p>
@@ -399,15 +683,15 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
       <h2>Over the years</h2>
     </div>
     <ol class="timeline">
-      <li><span class="yr">2025</span><span class="rail"><svg><use href="#daisy"/></svg></span>
+      <li id="ach-grant"><span class="yr">2025</span><span class="rail"><svg><use href="#daisy"/></svg></span>
         <div class="what"><h3>₹15 Lakh MSME grant</h3><p>Government of India innovation funding to take a robot from prototype toward a product.</p></div></li>
-      <li><span class="yr">2025</span><span class="rail"><svg><use href="#daisy"/></svg></span>
+      <li id="ach-patents"><span class="yr">2025</span><span class="rail"><svg><use href="#daisy"/></svg></span>
         <div class="what"><h3>2 patents granted, 3 pending</h3><p>Two inventions granted, with three more filed and under examination.</p></div></li>
       <li><span class="yr">2025</span><span class="rail"><svg><use href="#daisy"/></svg></span>
         <div class="what"><h3>DGCA-certified drone pilot</h3><p>Licensed to fly drones under India's civil aviation regulator.</p></div></li>
       <li><span class="yr">2025</span><span class="rail"><svg><use href="#daisy"/></svg></span>
         <div class="what"><h3>Research paper: Daisy Blocks</h3><p>A novel hybrid robot arm with rack-and-pinion plus rotary joints, current-threshold homing and VR teleoperation.</p></div></li>
-      <li><span class="yr">Across</span><span class="rail"><svg><use href="#daisy"/></svg></span>
+      <li id="ach-hack"><span class="yr">Across</span><span class="rail"><svg><use href="#daisy"/></svg></span>
         <div class="what"><h3>19 hackathon wins out of 29</h3><p>Including two wins at IIT Madras, plus IIT Bhilai and NIT Raipur.</p></div></li>
       <li><span class="yr">Earlier</span><span class="rail"><svg><use href="#daisy"/></svg></span>
         <div class="what"><h3>Showcased at IIT Bombay</h3><p>The vision-guided pick and place robotic car was exhibited at IIT Bombay.</p></div></li>
@@ -536,7 +820,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
   /* ---------- mobile menu ---------- */
   var mb=document.getElementById('menu-btn'),nl=document.getElementById('nav-links');
   mb.addEventListener('click',function(){var o=nl.classList.toggle('open');mb.setAttribute('aria-expanded',o)});
-  nl.addEventListener('click',function(e){if(e.target.tagName==='A'){nl.classList.remove('open');mb.setAttribute('aria-expanded','false')}});
+  nl.addEventListener('click',function(e){if(e.target.closest('a')){nl.classList.remove('open');mb.setAttribute('aria-expanded','false')}});
 
   /* ---------- GitHub avatar fallback ---------- */
   var av=document.getElementById('gh-avatar');
@@ -562,7 +846,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
   var cv=document.getElementById('petals'),ctx=cv.getContext('2d'),W,H,dpr=Math.min(devicePixelRatio||1,2),stars=[],petals=[];
   function size(){var r=cv.getBoundingClientRect();W=r.width;H=r.height;cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
     stars=[];for(var i=0;i<Math.round(W*H/9000);i++)stars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.3+.2,p:Math.random()*6.28});}
-  function newPetal(top){return{x:Math.random()*W,y:top?-20:Math.random()*H,s:Math.random()*6+5,vy:Math.random()*.35+.18,vx:Math.random()*.3-.1,a:Math.random()*6.28,va:(Math.random()-.5)*.02,w:Math.random()*6.28,c:Math.random()<.18?'#f3b866':(Math.random()<.3?'#ec93b8':'#fbeef4')}}
+  function newPetal(top){return{x:Math.random()*W,y:top?-20:Math.random()*H,s:Math.random()*6+5,vy:Math.random()*.35+.18,vx:Math.random()*.3-.1,a:Math.random()*6.28,va:(Math.random()-.5)*.02,w:Math.random()*6.28,c:(function(r){return r<.15?'#ffcf3d':r<.25?'#ff8b24':r<.4?'#ec93b8':'#fbeef4'})(Math.random())}}
   function draw(t){
     ctx.clearRect(0,0,W,H);
     stars.forEach(function(s){var a=.35+.4*Math.sin(t/900+s.p);ctx.globalAlpha=a;ctx.fillStyle='#e9e3fb';ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,6.28);ctx.fill()});
@@ -580,6 +864,743 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
   addEventListener('resize',size);
   requestAnimationFrame(draw);
 })();
+</script>
+
+<script>
+/* ============================================================
+   DAISY BOTICS MUSIC ENGINE
+   Every track is composed live with the Web Audio API, so the
+   music is original and copyright-free. To use your own licensed
+   files instead, set a path below, e.g. hiphop: "assets/music/hiphop.mp3".
+   ============================================================ */
+var TRACK_FILES = { hiphop: null, lofi: null, synth: null, ambient: null };
+
+var Music = (function () {
+  var ctx, master, comp, tone, verb, noise, crackleSrc, crackleGain;
+  var timer = null, step = 0, nextT = 0, S = null, name = null, playing = false, vol = 0.55, token = 0, fileAudio = null;
+  var mtof = function (m) { return 440 * Math.pow(2, (m - 69) / 12); };
+
+  function init() {
+    if (ctx) return;
+    var AC = window.AudioContext || window.webkitAudioContext;
+    ctx = new AC();
+    master = ctx.createGain(); master.gain.value = 0;
+    comp = ctx.createDynamicsCompressor(); comp.threshold.value = -16; comp.ratio.value = 3; comp.attack.value = .01; comp.release.value = .2;
+    tone = ctx.createBiquadFilter(); tone.type = 'lowpass'; tone.frequency.value = 16000; tone.Q.value = .4;
+    tone.connect(comp); comp.connect(master); master.connect(ctx.destination);
+    verb = ctx.createConvolver(); verb.buffer = impulse(2.8, 2.4);
+    var vg = ctx.createGain(); vg.gain.value = .9; verb.connect(vg); vg.connect(tone);
+    noise = ctx.createBuffer(1, ctx.sampleRate, ctx.sampleRate);
+    var d = noise.getChannelData(0); for (var i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+  }
+  function impulse(sec, decay) {
+    var len = Math.floor(ctx.sampleRate * sec), b = ctx.createBuffer(2, len, ctx.sampleRate);
+    for (var c = 0; c < 2; c++) { var x = b.getChannelData(c); for (var i = 0; i < len; i++) x[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, decay); }
+    return b;
+  }
+  function out(node, wet) {
+    node.connect(tone);
+    if (wet) { var g = ctx.createGain(); g.gain.value = wet; node.connect(g); g.connect(verb); }
+  }
+  function env(g, t, peak, a, dur, rel) {
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(peak, t + a);
+    g.gain.setTargetAtTime(0.0001, t + Math.max(a, dur), rel);
+  }
+
+  /* ---- instruments ---- */
+  function kick(t, v) {
+    var o = ctx.createOscillator(), g = ctx.createGain();
+    o.frequency.setValueAtTime(150, t); o.frequency.exponentialRampToValueAtTime(44, t + .16);
+    g.gain.setValueAtTime(v, t); g.gain.exponentialRampToValueAtTime(.0001, t + .42);
+    o.connect(g); out(g, 0); o.start(t); o.stop(t + .45);
+  }
+  function snare(t, v, wet) {
+    var s = ctx.createBufferSource(); s.buffer = noise;
+    var f = ctx.createBiquadFilter(); f.type = 'bandpass'; f.frequency.value = 1800; f.Q.value = .7;
+    var g = ctx.createGain(); g.gain.setValueAtTime(v, t); g.gain.exponentialRampToValueAtTime(.0001, t + .2);
+    s.connect(f); f.connect(g); out(g, wet); s.start(t, Math.random() * .5); s.stop(t + .22);
+    var o = ctx.createOscillator(), og = ctx.createGain();
+    o.frequency.setValueAtTime(210, t); o.frequency.exponentialRampToValueAtTime(130, t + .07);
+    og.gain.setValueAtTime(v * .55, t); og.gain.exponentialRampToValueAtTime(.0001, t + .09);
+    o.connect(og); out(og, 0); o.start(t); o.stop(t + .1);
+  }
+  function hat(t, v, open) {
+    var s = ctx.createBufferSource(); s.buffer = noise;
+    var f = ctx.createBiquadFilter(); f.type = 'highpass'; f.frequency.value = 7200;
+    var g = ctx.createGain(); g.gain.setValueAtTime(v, t); g.gain.exponentialRampToValueAtTime(.0001, t + (open ? .22 : .045));
+    s.connect(f); f.connect(g); out(g, .05); s.start(t, Math.random() * .5); s.stop(t + .25);
+  }
+  function bass(t, m, dur, v, type, cut) {
+    var o = ctx.createOscillator(), f = ctx.createBiquadFilter(), g = ctx.createGain();
+    o.type = type || 'sine'; o.frequency.value = mtof(m);
+    f.type = 'lowpass'; f.frequency.value = cut || 600;
+    env(g, t, v, .012, dur * .85, .06);
+    o.connect(f); f.connect(g); out(g, 0); o.start(t); o.stop(t + dur + .5);
+  }
+  function keys(t, notes, dur, v, wet, bright) {   /* electric-piano-ish */
+    var f = ctx.createBiquadFilter(); f.type = 'lowpass'; f.frequency.value = bright || 2200;
+    var g = ctx.createGain(); env(g, t, v, .015, dur * .7, .35);
+    var trem = ctx.createOscillator(), tg = ctx.createGain(); trem.frequency.value = 4.5; tg.gain.value = v * .25;
+    trem.connect(tg); tg.connect(g.gain); trem.start(t); trem.stop(t + dur + 2);
+    notes.forEach(function (m, i) {
+      [['sine', 0], ['triangle', 7]].forEach(function (p) {
+        var o = ctx.createOscillator(); o.type = p[0]; o.frequency.value = mtof(m); o.detune.value = p[1] * (i % 2 ? 1 : -1);
+        o.connect(f); o.start(t + i * .012); o.stop(t + dur + 2);
+      });
+    });
+    f.connect(g); out(g, wet);
+  }
+  function pad(t, notes, dur, v, wet, type, cut) {
+    var f = ctx.createBiquadFilter(); f.type = 'lowpass'; f.frequency.value = cut || 1400;
+    var g = ctx.createGain(); g.gain.setValueAtTime(.0001, t); g.gain.linearRampToValueAtTime(v, t + dur * .3); g.gain.setTargetAtTime(.0001, t + dur * .85, dur * .2);
+    notes.forEach(function (m) {
+      [-9, 9].forEach(function (dt) {
+        var o = ctx.createOscillator(); o.type = type || 'sawtooth'; o.frequency.value = mtof(m); o.detune.value = dt;
+        o.connect(f); o.start(t); o.stop(t + dur * 1.6);
+      });
+    });
+    f.connect(g); out(g, wet);
+  }
+  function pluck(t, m, v, wet, type, len) {
+    var o = ctx.createOscillator(), g = ctx.createGain(), f = ctx.createBiquadFilter();
+    o.type = type || 'triangle'; o.frequency.value = mtof(m);
+    f.type = 'lowpass'; f.frequency.setValueAtTime(3800, t); f.frequency.exponentialRampToValueAtTime(700, t + (len || .3));
+    g.gain.setValueAtTime(v, t); g.gain.exponentialRampToValueAtTime(.0001, t + (len || .3));
+    o.connect(f); f.connect(g); out(g, wet); o.start(t); o.stop(t + (len || .3) + .05);
+  }
+  function crackle(on) {
+    if (on && !crackleSrc) {
+      var len = ctx.sampleRate * 3, b = ctx.createBuffer(1, len, ctx.sampleRate), d = b.getChannelData(0);
+      for (var i = 0; i < len; i++) { d[i] = (Math.random() * 2 - 1) * .006; if (Math.random() < .00045) d[i] = (Math.random() * 2 - 1) * .5; }
+      crackleSrc = ctx.createBufferSource(); crackleSrc.buffer = b; crackleSrc.loop = true;
+      crackleGain = ctx.createGain(); crackleGain.gain.value = .5;
+      crackleSrc.connect(crackleGain); crackleGain.connect(comp); crackleSrc.start();
+    } else if (!on && crackleSrc) { try { crackleSrc.stop(); } catch (e) {} crackleSrc = null; }
+  }
+
+  /* ---- the four moods: chords are MIDI note numbers ---- */
+  var STY = {
+    hiphop: { bpm: 88, swing: .14, cut: 6500,
+      prog: [[57, 60, 64, 67], [50, 53, 57, 60, 64], [55, 59, 62, 65], [48, 52, 55, 59]], root: [45, 38, 43, 36],
+      play: function (st, bar, t, sd, ch, r) {
+        if ([0, 7, 10].indexOf(st) > -1 || (st === 15 && bar % 2)) kick(t, st === 0 ? .95 : .75);
+        if (st === 4 || st === 12) snare(t, .55, .12);
+        if (st % 2 === 0) hat(t, st % 4 === 0 ? .14 : .09); else if (Math.random() < .18) hat(t, .05);
+        if (st === 14 && bar % 4 === 3) hat(t, .1, true);
+        if (st === 0) keys(t, ch, sd * 9, .075, .28);
+        if (st === 10 && bar % 2) keys(t, ch.slice(1).map(function (n) { return n + 12; }), sd * 4, .045, .3, 3000);
+        if (st === 0) bass(t, r, sd * 6, .42); if (st === 7) bass(t, r + 12, sd * 2, .3); if (st === 10) bass(t, r + 7, sd * 4, .34);
+      } },
+    lofi: { bpm: 74, swing: .18, cut: 2300, crackle: true,
+      prog: [[53, 57, 60, 64], [52, 55, 59, 62], [50, 53, 57, 60, 64], [48, 52, 55, 59, 62]], root: [41, 40, 38, 36],
+      play: function (st, bar, t, sd, ch, r) {
+        if (st === 0 || st === 10 || (st === 7 && bar % 2 === 0)) kick(t, .7);
+        if (st === 4 || st === 12) snare(t, .32, .3);
+        if (st % 2 === 0) hat(t, st % 4 === 0 ? .07 : .045);
+        if (st === 0) keys(t, ch, sd * 15, .085, .45, 1600);
+        if ((st === 6 || st === 9 || st === 13) && Math.random() < .7) pluck(t, ch[Math.floor(Math.random() * ch.length)] + 12, .05, .5, 'sine', .9);
+        if (st === 0) bass(t, r, sd * 7, .34); if (st === 8) bass(t, r + 7, sd * 6, .28);
+      } },
+    synth: { bpm: 104, swing: 0, cut: 9000,
+      prog: [[57, 60, 64], [53, 57, 60], [48, 55, 60, 64], [55, 59, 62]], root: [33, 29, 36, 31],
+      play: function (st, bar, t, sd, ch, r) {
+        if (st % 4 === 0) kick(t, .9);
+        if (st === 4 || st === 12) snare(t, .45, .4);
+        if (st % 4 === 2) hat(t, .1, true);
+        if (st % 2 === 0) bass(t, st % 4 === 0 ? r : r + 12, sd * 1.8, .2, 'sawtooth', 650);
+        if (st === 0) pad(t, ch, sd * 16, .03, .5, 'sawtooth', 1500);
+        var arp = ch.concat([ch[0] + 12]); pluck(t, arp[st % arp.length] + 12, .028, .35, 'square', .18);
+      } },
+    ambient: { bpm: 60, swing: 0, cut: 5000,
+      prog: [[50, 57, 62, 64, 69], [47, 54, 59, 62, 66], [43, 50, 55, 59, 62], [45, 52, 57, 61, 64]], root: [38, 35, 31, 33],
+      play: function (st, bar, t, sd, ch, r) {
+        if (st === 0) { pad(t, ch, sd * 18, .045, .75, 'triangle', 1800); bass(t, r, sd * 15, .12, 'sine', 300); }
+        var penta = [62, 64, 66, 69, 71, 74, 76, 78];
+        if (st % 2 === 0 && Math.random() < .28) pluck(t, penta[Math.floor(Math.random() * penta.length)], .05, .85, 'sine', 2.6);
+      } }
+  };
+
+  function schedule() {
+    while (nextT < ctx.currentTime + .12) {
+      var sd = 60 / S.bpm / 4, st = step % 16, bar = Math.floor(step / 16) % S.prog.length;
+      var t = nextT + (st % 2 ? S.swing * sd : 0);
+      S.play(st, bar, t, sd, S.prog[bar], S.root[bar]);
+      nextT += sd; step++;
+    }
+  }
+
+  function startFile(path) {
+    if (!fileAudio) { fileAudio = new Audio(); fileAudio.loop = true; }
+    fileAudio.src = path; fileAudio.volume = vol; fileAudio.play().catch(function () {});
+  }
+
+  return {
+    start: function (n) {
+      name = n; S = STY[n]; playing = true; token++;
+      if (TRACK_FILES[n]) { if (ctx) master.gain.setTargetAtTime(0, ctx.currentTime, .1); startFile(TRACK_FILES[n]); return; }
+      if (fileAudio) fileAudio.pause();
+      init(); if (ctx.state === 'suspended') ctx.resume();
+      tone.frequency.setTargetAtTime(S.cut, ctx.currentTime, .3);
+      crackle(!!S.crackle);
+      if (!timer) { step = 0; nextT = ctx.currentTime + .1; timer = setInterval(schedule, 25); }
+      else step = Math.ceil(step / 16) * 16;
+      master.gain.cancelScheduledValues(ctx.currentTime);
+      master.gain.setTargetAtTime(vol, ctx.currentTime, .5);
+    },
+    stop: function () {
+      playing = false; var tk = ++token;
+      if (fileAudio) fileAudio.pause();
+      if (!ctx) return;
+      master.gain.cancelScheduledValues(ctx.currentTime);
+      master.gain.setTargetAtTime(0, ctx.currentTime, .12);
+      setTimeout(function () { if (tk === token && !playing) { clearInterval(timer); timer = null; crackle(false); } }, 500);
+    },
+    volume: function (v) {
+      vol = v; if (fileAudio) fileAudio.volume = v;
+      if (ctx && playing) master.gain.setTargetAtTime(v, ctx.currentTime, .05);
+    },
+    sfx: function (k) {
+      init(); if (ctx.state === 'suspended') ctx.resume();
+      var t = ctx.currentTime + .005, o = ctx.createGain(); o.gain.value = Math.max(.15, vol); o.connect(ctx.destination);
+      function blip(f0, f1, at, len, type, v) {
+        var x = ctx.createOscillator(), g = ctx.createGain(); x.type = type || 'sine';
+        x.frequency.setValueAtTime(f0, t + at); if (f1) x.frequency.exponentialRampToValueAtTime(f1, t + at + len);
+        g.gain.setValueAtTime(v, t + at); g.gain.exponentialRampToValueAtTime(.0001, t + at + len);
+        x.connect(g); g.connect(o); x.start(t + at); x.stop(t + at + len + .02);
+      }
+      function click(v, len) {
+        var s = ctx.createBufferSource(); s.buffer = noise; var f = ctx.createBiquadFilter(); f.type = 'highpass'; f.frequency.value = 2500;
+        var g = ctx.createGain(); g.gain.setValueAtTime(v, t); g.gain.exponentialRampToValueAtTime(.0001, t + len);
+        s.connect(f); f.connect(g); g.connect(o); s.start(t, Math.random() * .5); s.stop(t + len + .01);
+      }
+      if (k === 'tick') { click(.35, .018); blip(2200, 0, 0, .025, 'square', .03); }
+      else if (k === 'press') { click(.4, .03); blip(170, 55, 0, .18, 'sine', .5); }
+      else if (k === 'beep') { blip(880, 0, 0, .07, 'square', .05); blip(1320, 0, .09, .09, 'square', .05); }
+      else if (k === 'plant') { blip(392, 784, 0, .22, 'triangle', .16); blip(1175, 0, .16, .3, 'sine', .06); }
+      else if (k === 'sparkle') { [1568, 1976, 2349].forEach(function (f, i) { blip(f, 0, i * .05, .25, 'sine', .05); }); }
+    },
+    isPlaying: function () { return playing; },
+    current: function () { return name; }
+  };
+})();
+
+</script>
+<script>
+/* ============================================================
+   THE GARDEN WORLD (intro background)
+   Hills of daisies swaying in a breeze, robots tending them,
+   yellow and pink petals in the wind, and a sparkle trail that
+   follows the cursor. Everything is drawn on one canvas.
+   ============================================================ */
+var World = (function () {
+  var cv = document.getElementById('world'), c = cv.getContext('2d');
+  var W = 0, H = 0, DPR = Math.min(window.devicePixelRatio || 1, 2), last = 0, T = 0, raf = null, alive = true;
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var small = matchMedia('(max-width: 700px)').matches;
+  var P = { x: -999, y: -999, vx: 0, vy: 0, seen: 0 };
+  var flowers = [], petals = [], flies = [], stars = [], trail = [], robots = [], bursts = [];
+  var onSfx = function () {};
+  var rnd = function (a, b) { return a + Math.random() * (b - a); };
+  var pick = function (arr) { return arr[Math.floor(Math.random() * arr.length)]; };
+
+  /* ---- flower sprites, drawn once ---- */
+  function makeFlower(n, petal, heart, rx, ry, ring) {
+    var s = document.createElement('canvas'); s.width = s.height = 96;
+    var g = s.getContext('2d'); g.translate(48, 48);
+    for (var i = 0; i < n; i++) {
+      g.save(); g.rotate(i * Math.PI * 2 / n);
+      var gr = g.createLinearGradient(0, 0, 0, -44); gr.addColorStop(0, petal[1]); gr.addColorStop(1, petal[0]);
+      g.fillStyle = gr; g.beginPath(); g.ellipse(0, -ry - 4, rx, ry, 0, 0, Math.PI * 2); g.fill(); g.restore();
+    }
+    g.fillStyle = heart; g.beginPath(); g.arc(0, 0, ring, 0, Math.PI * 2); g.fill();
+    g.fillStyle = 'rgba(0,0,0,.12)'; g.beginPath(); g.arc(2, 2, ring * .6, 0, Math.PI * 2); g.fill();
+    return s;
+  }
+  var SPR = {
+    white: makeFlower(13, ['#ffffff', '#ddd3f2'], '#ffcf3d', 6.5, 19, 12),
+    pink: makeFlower(13, ['#ffd3e5', '#ec93b8'], '#ffcf3d', 6.5, 19, 12),
+    sun: makeFlower(5, ['#ffe27a', '#ffcf3d'], '#ff8b24', 14, 17, 13),
+    tang: makeFlower(5, ['#ffb15e', '#ff8b24'], '#ffcf3d', 14, 17, 13)
+  };
+  var KINDS = ['white', 'white', 'white', 'white', 'white', 'pink', 'pink', 'sun', 'sun', 'tang'];
+
+  /* ---- landscape ---- */
+  var LAYER = [
+    { base: .66, a1: .035, a2: .016, f1: .0032, f2: .009, col: '#2b2048', n: 70, sz: [5, 8], st: [10, 22], al: .5 },
+    { base: .76, a1: .03, a2: .014, f1: .0045, f2: .011, col: '#21173a', n: 90, sz: [9, 14], st: [22, 44], al: .78 },
+    { base: .88, a1: .028, a2: .012, f1: .006, f2: .013, col: '#170f2a', n: 60, sz: [15, 24], st: [42, 84], al: 1 }
+  ];
+  function hillY(li, x) {
+    var L = LAYER[li];
+    return H * L.base + Math.sin(x * L.f1 + li * 1.7) * H * L.a1 + Math.sin(x * L.f2 + li * 3.1) * H * L.a2;
+  }
+
+  function seed() {
+    flowers = []; petals = []; flies = []; stars = [];
+    var k = small ? .5 : 1;
+    LAYER.forEach(function (L, li) {
+      for (var i = 0; i < Math.round(L.n * k * (W / 1400 + .4)); i++) flowers.push({
+        li: li, x: rnd(-20, W + 20), size: rnd(L.sz[0], L.sz[1]), len: rnd(L.st[0], L.st[1]),
+        kind: pick(KINDS), ph: rnd(0, 6.28), stiff: rnd(.7, 1.3), spin: rnd(0, 6.28), grow: 1
+      });
+    });
+    flowers.sort(function (a, b) { return a.li - b.li; });
+    for (var j = 0; j < (small ? 40 : 75); j++) petals.push(newPetal(true));
+    for (var f = 0; f < (small ? 14 : 26); f++) flies.push({ x: rnd(0, W), y: rnd(H * .35, H * .9), ph: rnd(0, 6.28), sp: rnd(.2, .5) });
+    for (var s = 0; s < (small ? 70 : 140); s++) stars.push({ x: rnd(0, W), y: rnd(0, H * .55), r: rnd(.3, 1.4), ph: rnd(0, 6.28) });
+    robots = [
+      { type: 'rover', x: W * .2, dir: 1, speed: 26, hop: 0, hv: 0, blink: 0, s: small ? .8 : 1 },
+      { type: 'drone', x: W * .55, y: H * .3, dir: -1, speed: 18, hop: 0, hv: 0, s: small ? .75 : 1 },
+      { type: 'arm', x: W * (small ? .82 : .43), s: small ? .7 : 1, hop: 0, hv: 0 },
+      { type: 'bug', x: W * .35, dir: 1, speed: 14, hop: 0, hv: 0, s: 1 },
+      { type: 'bug', x: W * .66, dir: -1, speed: 11, hop: 0, hv: 0, s: .85 }
+    ];
+  }
+  function newPetal(anywhere) {
+    return { x: anywhere ? rnd(-50, W) : rnd(-120, -10), y: rnd(-20, H * .95), s: rnd(3, 7), rot: rnd(0, 6.28), vr: rnd(-.04, .04),
+      flip: rnd(0, 6.28), vf: rnd(.04, .1), drift: rnd(.4, 1.3), ph: rnd(0, 6.28),
+      col: pick(['#ffcf3d', '#ffcf3d', '#ec93b8', '#ec93b8', '#ffd3e5', '#ffffff', '#ff8b24']) };
+  }
+
+  function size() {
+    var r = cv.getBoundingClientRect(); W = r.width; H = r.height;
+    cv.width = Math.round(W * DPR); cv.height = Math.round(H * DPR); c.setTransform(DPR, 0, 0, DPR, 0, 0);
+    seed();
+  }
+
+  /* ---- the breeze: slow gusts plus a push from the cursor ---- */
+  function windAt() { return .75 + .55 * Math.sin(T * .23) + .35 * Math.sin(T * .71 + 1.3) + .15 * Math.sin(T * 1.9); }
+
+  /* ---- drawing helpers ---- */
+  function rr(x, y, w, h, r) { c.beginPath(); c.moveTo(x + r, y); c.arcTo(x + w, y, x + w, y + h, r); c.arcTo(x + w, y + h, x, y + h, r); c.arcTo(x, y + h, x, y, r); c.arcTo(x, y, x + w, y, r); c.closePath(); }
+  function alu(y0, y1) { var g = c.createLinearGradient(0, y0, 0, y1); g.addColorStop(0, '#ece7f8'); g.addColorStop(.5, '#b9b1d3'); g.addColorStop(1, '#857ca6'); return g; }
+  function sprite(kind, x, y, r, rot, a) { c.save(); c.globalAlpha = a == null ? 1 : a; c.translate(x, y); c.rotate(rot); c.drawImage(SPR[kind], -r, -r, r * 2, r * 2); c.restore(); }
+  function eye(x, y, r, blink) {
+    c.save(); c.shadowColor = '#9ff5ff'; c.shadowBlur = 12; c.fillStyle = '#c8fbff';
+    c.beginPath(); c.ellipse(x, y, r, r * (blink ? .15 : 1), 0, 0, Math.PI * 2); c.fill(); c.restore();
+  }
+
+  function sky() {
+    var g = c.createLinearGradient(0, 0, 0, H);
+    g.addColorStop(0, '#120b20'); g.addColorStop(.45, '#24173f'); g.addColorStop(.68, '#4a2752'); g.addColorStop(1, '#2a1838');
+    c.fillStyle = g; c.fillRect(0, 0, W, H);
+    var mx = W * .16, my = H * .2, mr = Math.min(W, H) * .055;
+    var halo = c.createRadialGradient(mx, my, mr * .5, mx, my, mr * 5);
+    halo.addColorStop(0, 'rgba(255,230,240,.28)'); halo.addColorStop(1, 'rgba(255,230,240,0)');
+    c.fillStyle = halo; c.fillRect(0, 0, W, H);
+    c.fillStyle = '#fbeef4'; c.beginPath(); c.arc(mx, my, mr, 0, Math.PI * 2); c.fill();
+    c.fillStyle = 'rgba(200,180,220,.35)'; c.beginPath(); c.arc(mx - mr * .3, my - mr * .2, mr * .22, 0, 7); c.arc(mx + mr * .35, my + mr * .3, mr * .15, 0, 7); c.fill();
+    stars.forEach(function (s) { c.globalAlpha = .3 + .5 * Math.abs(Math.sin(T * .8 + s.ph)); c.fillStyle = '#efe9ff'; c.beginPath(); c.arc(s.x, s.y, s.r, 0, 6.28); c.fill(); });
+    c.globalAlpha = 1;
+    var hz = c.createRadialGradient(W * .55, H * .68, 10, W * .55, H * .68, W * .6);
+    hz.addColorStop(0, 'rgba(255,139,36,.22)'); hz.addColorStop(1, 'rgba(255,139,36,0)');
+    c.fillStyle = hz; c.fillRect(0, 0, W, H);
+  }
+
+  /* a giant gardener robot on the horizon, holding up one huge daisy */
+  function giant() {
+    var x = W * (small ? .7 : .57), gy = hillY(0, x) + 6, h = Math.min(H * .34, 320), u = h / 100;
+    c.save(); c.translate(x, gy); c.fillStyle = '#33275a'; c.globalAlpha = .9;
+    rr(-12 * u, -38 * u, 9 * u, 38 * u, 3 * u); c.fill(); rr(3 * u, -38 * u, 9 * u, 38 * u, 3 * u); c.fill();
+    rr(-20 * u, -76 * u, 40 * u, 40 * u, 10 * u); c.fill();
+    rr(-13 * u, -98 * u, 26 * u, 20 * u, 8 * u); c.fill();
+    var lift = Math.sin(T * .5) * 3 * u;
+    c.save(); c.translate(16 * u, -70 * u); c.rotate(-1.15 + Math.sin(T * .5) * .05);
+    rr(0, -4 * u, 34 * u, 8 * u, 4 * u); c.fill(); c.restore();
+    c.strokeStyle = '#33275a'; c.lineWidth = 2.2 * u; c.beginPath(); c.moveTo(29 * u, -100 * u + lift); c.lineTo(32 * u, -130 * u + lift); c.stroke();
+    c.restore();
+    sprite('white', x + 32 * u, gy - 136 * u + lift, 15 * u, T * .15, .55);
+    c.save(); c.globalAlpha = .55 + .35 * Math.sin(T * 1.4); eye(x + 3 * u, gy - 89 * u, 3.2 * u, false); c.restore();
+  }
+
+  function hill(li) {
+    c.fillStyle = LAYER[li].col; c.beginPath(); c.moveTo(0, H);
+    for (var x = 0; x <= W + 20; x += 20) c.lineTo(x, hillY(li, x));
+    c.lineTo(W, H); c.closePath(); c.fill();
+  }
+
+  function drawFlowers(li, wind) {
+    var L = LAYER[li];
+    for (var i = 0; i < flowers.length; i++) {
+      var f = flowers[i]; if (f.li !== li) continue;
+      if (f.grow < 1) f.grow = Math.min(1, f.grow + .022);
+      var g = f.grow < 1 ? Math.sin(f.grow * Math.PI * .5) * (1 + .25 * Math.sin(f.grow * Math.PI)) : 1;
+      var bx = f.x, by = hillY(li, bx) + 3, len = f.len * g;
+      var ang = (wind * .22 + Math.sin(T * 1.6 + f.ph + bx * .004) * .07 * wind) * f.stiff * (1 + li * .25);
+      var hx = bx + Math.sin(ang) * len, hy = by - Math.cos(ang) * len;
+      var dx = hx - P.x, dy = hy - P.y, d = Math.sqrt(dx * dx + dy * dy);
+      if (d < 130 && P.seen > 0) { var push = (1 - d / 130) * .9 * (li + 1) / 3; ang += (dx > 0 ? 1 : -1) * push; hx = bx + Math.sin(ang) * len; hy = by - Math.cos(ang) * len; }
+      c.strokeStyle = 'rgba(126,186,140,' + (L.al * .75) + ')'; c.lineWidth = Math.max(1, f.size * .12);
+      c.beginPath(); c.moveTo(bx, by); c.quadraticCurveTo(bx + Math.sin(ang * .4) * len * .4, by - len * .55, hx, hy); c.stroke();
+      if (li > 0 && len > 30) { c.fillStyle = 'rgba(126,186,140,' + (L.al * .6) + ')'; c.beginPath(); c.ellipse(bx + Math.sin(ang * .3) * len * .25 + 5, by - len * .3, 6 * (f.size / 20), 2.5 * (f.size / 20), -.5, 0, 6.28); c.fill(); }
+      sprite(f.kind, hx, hy, f.size * g, f.spin + ang * 1.4, L.al);
+    }
+  }
+
+  /* ---- robots ---- */
+  function rover(r, dt) {
+    r.x += r.dir * r.speed * dt; if (r.x > W + 60) r.x = -60; if (r.x < -60) r.x = W + 60;
+    var gy = hillY(1, r.x), tilt = Math.atan2(hillY(1, r.x + 6) - hillY(1, r.x - 6), 12), s = r.s;
+    r.blink = (T % 4.2) < .12;
+    c.save(); c.translate(r.x, gy - r.hop); c.rotate(tilt); c.scale(s * r.dir, s);
+    c.fillStyle = 'rgba(0,0,0,.25)'; c.beginPath(); c.ellipse(0, 1, 26, 4, 0, 0, 6.28); c.fill();
+    [-14, 14].forEach(function (wx) {
+      c.fillStyle = '#2b2340'; c.beginPath(); c.arc(wx, -8, 8, 0, 6.28); c.fill();
+      c.strokeStyle = '#8f86ad'; c.lineWidth = 1.5; c.beginPath(); c.arc(wx, -8, 5.5, 0, 6.28); c.stroke();
+      var a = r.x / 8; c.beginPath(); c.moveTo(wx + Math.cos(a) * 5, -8 + Math.sin(a) * 5); c.lineTo(wx - Math.cos(a) * 5, -8 - Math.sin(a) * 5); c.stroke();
+    });
+    c.fillStyle = alu(-36, -12); rr(-22, -34, 44, 22, 8); c.fill();
+    c.drawImage(SPR.tang, -7, -30, 14, 14);
+    c.fillStyle = '#6f6690'; c.fillRect(-2, -42, 4, 9);
+    c.fillStyle = '#efeaf9'; rr(-13, -58, 26, 18, 7); c.fill();
+    c.fillStyle = '#1b1430'; rr(-9, -54, 18, 10, 4); c.fill();
+    eye(3, -49, 3.6, r.blink); eye(-4, -49, 2.4, r.blink);
+    var sw = Math.sin(T * 3 + r.x * .02) * 3;
+    c.strokeStyle = '#6f6690'; c.lineWidth = 1.5; c.beginPath(); c.moveTo(-6, -58); c.quadraticCurveTo(-7, -66, -6 + sw, -74); c.stroke();
+    c.restore();
+    sprite('sun', r.x + (-6 + sw) * s * r.dir, gy - r.hop - 74 * s, 6 * s, T * 2, 1);
+    r.box = { x: r.x - 26 * s, y: gy - 78 * s - r.hop, w: 52 * s, h: 80 * s };
+  }
+  function drone(r, dt, wind) {
+    r.x += r.dir * r.speed * dt; if (r.x < -80) r.x = W + 80; if (r.x > W + 80) r.x = -80;
+    var y = r.y + Math.sin(T * 1.3) * 10 - r.hop, s = r.s, sway = Math.sin(T * 1.7) * .12 + wind * .1;
+    c.save(); c.translate(r.x, y); c.scale(s, s);
+    c.strokeStyle = 'rgba(230,220,250,.7)'; c.lineWidth = 1.2;
+    var rope = 34; var px = Math.sin(sway) * rope, py = Math.cos(sway) * rope;
+    c.beginPath(); c.moveTo(0, 6); c.lineTo(px, py + 6); c.stroke();
+    c.fillStyle = '#c4683c'; c.beginPath(); c.moveTo(px - 9, py + 6); c.lineTo(px + 9, py + 6); c.lineTo(px + 6, py + 20); c.lineTo(px - 6, py + 20); c.closePath(); c.fill();
+    c.fillStyle = '#e07a45'; c.fillRect(px - 10, py + 4, 20, 4);
+    c.restore();
+    sprite('pink', r.x + px * s, y + (py + 2) * s - 12 * s, 10 * s, Math.sin(T) * .3, 1);
+    c.save(); c.translate(r.x, y); c.scale(s, s);
+    [-24, 24].forEach(function (ax) {
+      c.fillStyle = '#6f6690'; c.fillRect(Math.min(0, ax), -2, Math.abs(ax), 3);
+      c.fillStyle = 'rgba(240,235,255,' + (.35 + .25 * Math.sin(T * 40 + ax)) + ')';
+      c.beginPath(); c.ellipse(ax, -6, 16, 2.2, 0, 0, 6.28); c.fill();
+      c.fillStyle = '#4b4268'; c.fillRect(ax - 1.5, -6, 3, 6);
+    });
+    c.fillStyle = alu(-10, 10); c.beginPath(); c.ellipse(0, 0, 15, 10, 0, 0, 6.28); c.fill();
+    c.fillStyle = '#1b1430'; c.beginPath(); c.ellipse(4, 0, 7, 5, 0, 0, 6.28); c.fill();
+    eye(5, 0, 2.6, (T % 3.3) < .12);
+    c.save(); c.globalAlpha = .5 + .5 * Math.sin(T * 6); c.fillStyle = '#ff8b24'; c.beginPath(); c.arc(-10, -5, 1.8, 0, 6.28); c.fill(); c.restore();
+    c.restore();
+    r.box = { x: r.x - 40 * s, y: y - 16 * s, w: 80 * s, h: 64 * s };
+  }
+  function arm(r) {
+    var bx = r.x, by = hillY(2, bx) + 2, s = r.s;
+    var a1 = -.35 + Math.sin(T * .55) * .45, a2 = 1.1 + Math.sin(T * .55 + 1.2) * .55;
+    c.save(); c.translate(bx, by - r.hop); c.scale(s, s);
+    c.fillStyle = alu(-26, 0); c.beginPath(); c.ellipse(0, -6, 30, 14, 0, Math.PI, 0); c.fill(); rr(-30, -8, 60, 10, 4); c.fill();
+    c.drawImage(SPR.sun, -8, -22, 16, 16);
+    c.translate(0, -18); c.rotate(a1);
+    c.fillStyle = alu(-80, 0); rr(-7, -80, 14, 80, 7); c.fill();
+    c.fillStyle = '#ff8b24'; c.beginPath(); c.arc(0, 0, 9, 0, 6.28); c.fill(); c.fillStyle = '#ffcf3d'; c.beginPath(); c.arc(0, 0, 4, 0, 6.28); c.fill();
+    c.translate(0, -80); c.rotate(a2);
+    c.fillStyle = alu(-64, 0); rr(-6, -64, 12, 64, 6); c.fill();
+    c.fillStyle = '#ff8b24'; c.beginPath(); c.arc(0, 0, 8, 0, 6.28); c.fill(); c.fillStyle = '#ffcf3d'; c.beginPath(); c.arc(0, 0, 3.5, 0, 6.28); c.fill();
+    c.translate(0, -64);
+    var grip = 4 + Math.sin(T * 1.1) * 2;
+    c.fillStyle = '#4b4268'; c.fillRect(-grip - 3, -12, 3, 12); c.fillRect(grip, -12, 3, 12); c.fillRect(-8, -2, 16, 4);
+    c.strokeStyle = 'rgba(126,186,140,.9)'; c.lineWidth = 2; c.beginPath(); c.moveTo(0, -4); c.lineTo(0, -26); c.stroke();
+    var m = c.getTransform();
+    c.restore();
+    var hx = m.e / DPR, hy = m.f / DPR, rot = Math.atan2(m.b, m.a);
+    sprite('tang', hx + Math.sin(rot) * 30 * s, hy - Math.cos(rot) * 30 * s, 12 * s, rot + T * .3, 1);
+    r.box = { x: bx - 40 * s, y: by - 170 * s, w: 80 * s, h: 172 * s };
+  }
+  function bug(r, dt) {
+    r.x += r.dir * r.speed * dt;
+    if (r.x > W - 20 || r.x < 20 || Math.random() < .002) r.dir *= -1;
+    var gy = hillY(2, r.x) + 2, s = r.s, step = Math.sin(T * 14) * 1.5;
+    c.save(); c.translate(r.x, gy - r.hop); c.scale(s * r.dir, s);
+    c.strokeStyle = '#4b4268'; c.lineWidth = 1.5;
+    [-6, 0, 6].forEach(function (lx, i) { c.beginPath(); c.moveTo(lx, -4); c.lineTo(lx + (i % 2 ? step : -step), 0); c.stroke(); });
+    c.fillStyle = '#ffcf3d'; c.beginPath(); c.ellipse(0, -7, 11, 7, 0, Math.PI, 0); c.fill(); c.fillRect(-11, -7, 22, 3);
+    c.fillStyle = '#ff8b24'; [-5, 1, 6].forEach(function (dx2) { c.beginPath(); c.arc(dx2, -10, 1.6, 0, 6.28); c.fill(); });
+    c.fillStyle = '#efeaf9'; c.beginPath(); c.arc(11, -6, 4, 0, 6.28); c.fill();
+    c.save(); c.globalAlpha = (T * 2 + r.x) % 1 < .5 ? 1 : .2; c.fillStyle = '#86ffa3'; c.beginPath(); c.arc(12.5, -6.5, 1.5, 0, 6.28); c.fill(); c.restore();
+    c.restore();
+    r.box = { x: r.x - 16 * s, y: gy - 20 * s, w: 32 * s, h: 22 * s };
+  }
+
+  /* ---- particles ---- */
+  function drawPetals(wind, dt) {
+    var sp = (1.1 + wind * 1.6) * 60 * dt;
+    petals.forEach(function (p, i) {
+      p.x += sp * p.drift + P.vx * .02 * Math.max(0, 1 - Math.abs(p.y - P.y) / 120);
+      p.y += (Math.sin(T * 1.2 + p.ph) * .5 + .28) * 60 * dt;
+      p.rot += p.vr; p.flip += p.vf;
+      if (p.x > W + 30 || p.y > H + 20) petals[i] = newPetal(false);
+      c.save(); c.translate(p.x, p.y); c.rotate(p.rot); c.scale(Math.cos(p.flip), 1);
+      c.fillStyle = p.col; c.globalAlpha = .85; c.beginPath(); c.ellipse(0, 0, p.s, p.s * .5, 0, 0, 6.28); c.fill(); c.restore();
+    });
+  }
+  function drawFlies() {
+    c.save(); c.globalCompositeOperation = 'lighter';
+    flies.forEach(function (f) {
+      var x = f.x + Math.sin(T * f.sp + f.ph) * 40, y = f.y + Math.cos(T * f.sp * 1.3 + f.ph) * 20, a = .3 + .7 * Math.max(0, Math.sin(T * 1.5 + f.ph));
+      var g = c.createRadialGradient(x, y, 0, x, y, 10); g.addColorStop(0, 'rgba(255,230,140,' + a + ')'); g.addColorStop(1, 'rgba(255,230,140,0)');
+      c.fillStyle = g; c.fillRect(x - 10, y - 10, 20, 20);
+    });
+    c.restore();
+  }
+  function star4(x, y, r, col, a) {
+    c.globalAlpha = a; c.fillStyle = col; c.beginPath();
+    c.moveTo(x, y - r); c.quadraticCurveTo(x, y, x + r, y); c.quadraticCurveTo(x, y, x, y + r); c.quadraticCurveTo(x, y, x - r, y); c.quadraticCurveTo(x, y, x, y - r); c.fill();
+  }
+  function spawnTrail(x0, y0, x1, y1) {
+    var dist = Math.hypot(x1 - x0, y1 - y0), n = Math.min(6, 1 + Math.floor(dist / 7));
+    for (var i = 0; i < n; i++) {
+      var k = i / n, x = x0 + (x1 - x0) * k, y = y0 + (y1 - y0) * k, fl = Math.random() < .38;
+      trail.push({ x: x + rnd(-3, 3), y: y + rnd(-3, 3), vx: -P.vx * .04 + rnd(-.6, .6), vy: -P.vy * .04 + rnd(-.8, .3), life: 1, decay: rnd(.012, .028),
+        r: fl ? rnd(4, 8) : rnd(2.5, 6), fl: fl, kind: pick(['sun', 'pink', 'white', 'tang']), rot: rnd(0, 6.28), vr: rnd(-.12, .12),
+        col: pick(['#ffe27a', '#ffcf3d', '#ffd3e5', '#ffffff', '#ec93b8']) });
+    }
+    if (trail.length > 420) trail.splice(0, trail.length - 420);
+  }
+  function burst(x, y, n, flowersToo) {
+    for (var i = 0; i < n; i++) {
+      var a = rnd(0, 6.28), v = rnd(1, 4);
+      trail.push({ x: x, y: y, vx: Math.cos(a) * v, vy: Math.sin(a) * v - 1, life: 1, decay: rnd(.012, .022), r: rnd(3, 7), fl: flowersToo && Math.random() < .5,
+        kind: pick(['sun', 'pink', 'white', 'tang']), rot: rnd(0, 6.28), vr: rnd(-.15, .15), col: pick(['#ffe27a', '#ffd3e5', '#ffffff', '#ec93b8']) });
+    }
+  }
+  function drawTrail(wind) {
+    c.save();
+    for (var i = trail.length - 1; i >= 0; i--) {
+      var p = trail[i];
+      p.x += p.vx + wind * .3; p.y += p.vy; p.vx *= .965; p.vy = p.vy * .965 + .03; p.rot += p.vr; p.life -= p.decay;
+      if (p.life <= 0) { trail.splice(i, 1); continue; }
+      if (p.fl) { c.globalCompositeOperation = 'source-over'; sprite(p.kind, p.x, p.y, p.r * (0.4 + p.life * .6), p.rot, p.life); }
+      else { c.globalCompositeOperation = 'lighter'; star4(p.x, p.y, p.r * p.life * 1.6, p.col, p.life); }
+    }
+    c.globalCompositeOperation = 'lighter';
+    if (P.seen > 0) {
+      var g = c.createRadialGradient(P.x, P.y, 0, P.x, P.y, 26); g.addColorStop(0, 'rgba(255,240,190,' + (.55 * P.seen) + ')'); g.addColorStop(1, 'rgba(255,240,190,0)');
+      c.globalAlpha = 1; c.fillStyle = g; c.fillRect(P.x - 26, P.y - 26, 52, 52);
+    }
+    c.restore(); c.globalAlpha = 1;
+  }
+
+  /* ---- loop ---- */
+  function frame(now) {
+    if (!alive) return;
+    var dt = Math.min(.05, (now - (last || now)) / 1000); last = now; T += dt;
+    var wind = windAt() + Math.max(-1, Math.min(1, P.vx * .01)) * P.seen;
+    P.seen = Math.max(0, P.seen - dt * .35); P.vx *= .9; P.vy *= .9;
+    sky(); giant();
+    hill(0); drawFlowers(0, wind);
+    hill(1); robots.forEach(function (r) { if (r.type === 'drone') drone(r, dt, wind); }); drawFlowers(1, wind);
+    robots.forEach(function (r) { if (r.type === 'rover') rover(r, dt); });
+    hill(2);
+    robots.forEach(function (r) { if (r.type === 'arm') arm(r); if (r.type === 'bug') bug(r, dt); });
+    drawFlowers(2, wind);
+    robots.forEach(function (r) { if (r.hop > 0 || r.hv) { r.hv -= 900 * dt; r.hop = Math.max(0, r.hop + r.hv * dt); if (r.hop === 0) r.hv = 0; } });
+    drawFlies(); drawPetals(wind, dt); drawTrail(wind);
+    var v = c.createRadialGradient(W / 2, H / 2, Math.min(W, H) * .35, W / 2, H / 2, Math.max(W, H) * .75);
+    v.addColorStop(0, 'rgba(20,13,34,0)'); v.addColorStop(1, 'rgba(20,13,34,.55)'); c.fillStyle = v; c.fillRect(0, 0, W, H);
+    if (!reduce) raf = requestAnimationFrame(frame);
+  }
+
+  /* ---- input ---- */
+  var lastX = null, lastY = null;
+  function move(e) {
+    var r = cv.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+    if (lastX !== null) { P.vx = x - lastX; P.vy = y - lastY; if (!reduce) spawnTrail(lastX, lastY, x, y); }
+    lastX = x; lastY = y; P.x = x; P.y = y; P.seen = 1;
+  }
+  function tap(e) {
+    var r = cv.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+    for (var i = 0; i < robots.length; i++) {
+      var b = robots[i].box;
+      if (b && x > b.x && x < b.x + b.w && y > b.y && y < b.y + b.h) { robots[i].hv = 300; robots[i].hop = .1; burst(x, y, 26, true); onSfx('beep'); if (reduce) frame(performance.now()); return; }
+    }
+    var ground = hillY(2, x) - 10;
+    if (y > hillY(1, x) - 20) {
+      var li = y > ground ? 2 : 1;
+      var L = LAYER[li], f = { li: li, x: x, size: rnd(L.sz[0], L.sz[1]) * 1.1, len: rnd(L.st[0], L.st[1]), kind: pick(KINDS), ph: rnd(0, 6.28), stiff: rnd(.8, 1.2), spin: rnd(0, 6.28), grow: 0 };
+      flowers.push(f); flowers.sort(function (a, b) { return a.li - b.li; });
+      if (flowers.length > 400) flowers.splice(flowers.findIndex(function (q) { return q.grow === 1; }), 1);
+      burst(x, hillY(li, x) - f.len, 14, false); onSfx('plant');
+    } else { burst(x, y, 18, true); onSfx('sparkle'); }
+    if (reduce) frame(performance.now());
+  }
+  window.addEventListener('pointermove', move, { passive: true });
+  cv.addEventListener('pointerdown', tap);
+  window.addEventListener('resize', function () { if (alive) size(); });
+
+  size(); requestAnimationFrame(frame);
+  return {
+    stop: function () { alive = false; if (raf) cancelAnimationFrame(raf); window.removeEventListener('pointermove', move); },
+    burstAt: function (x, y) { burst(x, y, 40, true); },
+    onSfx: function (fn) { onSfx = fn; }
+  };
+})();
+
+/* ---------- the Daisy Pod: wheel, sound switch, enter button, corner player ---------- */
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var store = {
+    get: function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+    set: function (k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  };
+  var NAMES = { ambient: 'Ambient', lofi: 'Lo-fi', hiphop: 'Hip hop', synth: 'Synthwave' };
+  var META = { ambient: '60 BPM · NO DRUMS', lofi: '74 BPM · VINYL', hiphop: '88 BPM · BOOM-BAP', synth: '104 BPM · NEON' };
+  var ORDER = ['ambient', 'lofi', 'hiphop', 'synth'];
+  var intro = $('intro'), pod = $('pod'), wheel = $('wheel'), grip = $('wheel-grip'), dock = $('dock');
+  var sel = $('dock-select'), podSwitch = $('sound-toggle'), dockSwitch = $('dock-toggle');
+  var mood = NAMES[store.get('db_mood')] ? store.get('db_mood') : 'ambient';
+  var soundOn = store.get('db_sound') !== 'off';
+  var unlocked = false, entered = false, gripDeg = ORDER.indexOf(mood) * 90;
+
+  function render() {
+    intro.querySelectorAll('.wl').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-mood') === mood)); });
+    $('ps-mood').textContent = NAMES[mood]; $('ps-bpm').textContent = META[mood];
+    $('ps-sound').textContent = soundOn ? 'SOUND ON' : 'SOUND OFF';
+    podSwitch.setAttribute('aria-checked', String(soundOn)); dockSwitch.setAttribute('aria-checked', String(soundOn));
+    var playing = Music.isPlaying();
+    pod.classList.toggle('playing', playing); dock.classList.toggle('on', playing);
+    pod.classList.toggle('waiting', soundOn && !unlocked);
+    $('ps-hint').textContent = !soundOn ? '> sound is off' : (unlocked ? '> now playing' : '> tap to start sound');
+    sel.value = mood; $('dock-name').textContent = NAMES[mood];
+    $('dock-state').textContent = soundOn ? 'Music on · press M to mute' : 'Music off · press M to play';
+    dockSwitch.setAttribute('aria-label', soundOn ? 'Turn music off' : 'Turn music on');
+    grip.style.transform = 'rotate(' + gripDeg + 'deg)';
+  }
+  function sfx(kind) { if (soundOn && unlocked) Music.sfx(kind); }
+  World.onSfx(sfx);
+
+  function setMood(m) {
+    if (m === mood) return;
+    mood = m; store.set('db_mood', m);
+    if (soundOn && unlocked) Music.start(m);
+    render();
+  }
+  function step(dir) {
+    var i = (ORDER.indexOf(mood) + dir + ORDER.length) % ORDER.length;
+    sfx('tick'); setMood(ORDER[i]);
+  }
+  function choose(m) {
+    var target = ORDER.indexOf(m) * 90, cur = ((gripDeg % 360) + 360) % 360, d = target - cur;
+    if (d > 180) d -= 360; if (d < -180) d += 360;
+    gripDeg += d; sfx('tick'); setMood(m); render();
+  }
+  function setSound(on) {
+    soundOn = on; store.set('db_sound', on ? 'on' : 'off');
+    if (on) { unlocked = true; Music.start(mood); } else Music.stop();
+    render(); if (on) sfx('tick');
+  }
+
+  /* browsers only allow sound after the first tap or key press */
+  function unlock() { if (unlocked || entered) return; unlocked = true; if (soundOn) Music.start(mood); render(); }
+  intro.addEventListener('pointerdown', unlock, true);
+
+  /* the wheel: drag around it, scroll on it, tap a label, or use arrow keys */
+  var dragging = false, lastA = 0, acc = 0, moved = 0, downLabel = null;
+  function angle(e) { var r = wheel.getBoundingClientRect(); return Math.atan2(e.clientY - (r.top + r.height / 2), e.clientX - (r.left + r.width / 2)) * 180 / Math.PI; }
+  wheel.addEventListener('pointerdown', function (e) {
+    if (e.target.closest('.hub')) return;
+    dragging = true; moved = 0; acc = 0; lastA = angle(e); downLabel = e.target.closest('.wl');
+    try { wheel.setPointerCapture(e.pointerId); } catch (x) {}
+    wheel.classList.add('grabbing'); grip.style.transition = 'none';
+  });
+  wheel.addEventListener('pointermove', function (e) {
+    if (!dragging) return;
+    var a = angle(e), d = a - lastA; if (d > 180) d -= 360; if (d < -180) d += 360;
+    lastA = a; acc += d; moved += Math.abs(d); gripDeg += d;
+    grip.style.transform = 'rotate(' + gripDeg + 'deg)';
+    if (Math.abs(acc) >= 55) { step(acc > 0 ? 1 : -1); acc = 0; }
+  });
+  function endDrag() {
+    if (!dragging) return;
+    dragging = false; wheel.classList.remove('grabbing'); grip.style.transition = '';
+    if (moved < 6 && downLabel) choose(downLabel.getAttribute('data-mood'));
+    downLabel = null;
+  }
+  wheel.addEventListener('pointerup', endDrag); wheel.addEventListener('pointercancel', endDrag);
+  intro.querySelectorAll('.wl').forEach(function (b) {
+    b.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); e.stopPropagation(); unlock(); choose(b.getAttribute('data-mood')); } });
+  });
+  var lastWheel = 0;
+  wheel.addEventListener('wheel', function (e) {
+    e.preventDefault(); var now = Date.now(); if (now - lastWheel < 220) return; lastWheel = now;
+    unlock(); var dir = e.deltaY > 0 ? 1 : -1; gripDeg += dir * 90; step(dir); render();
+  }, { passive: false });
+  wheel.addEventListener('keydown', function (e) {
+    if (e.target !== wheel) return;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); unlock(); gripDeg += 90; step(1); render(); }
+    else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); unlock(); gripDeg -= 90; step(-1); render(); }
+    else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); enter(); }
+  });
+
+  /* step inside */
+  function enter() {
+    if (entered) return;
+    unlock(); sfx('press'); entered = true; store.set('db_seen', '1');
+    var hub = $('enter-btn'); hub.classList.add('pressed');
+    var r = hub.getBoundingClientRect(); World.burstAt(r.left + r.width / 2, r.top + r.height / 2);
+    setTimeout(function () { hub.classList.remove('pressed'); intro.classList.add('leaving'); document.body.classList.remove('locked'); dock.hidden = false; render(); }, 420);
+    setTimeout(function () { intro.hidden = true; World.stop(); }, 1500);
+  }
+  $('enter-btn').addEventListener('click', enter);
+  $('skip-btn').addEventListener('click', enter);
+  podSwitch.addEventListener('click', function () { setSound(!soundOn); });
+  dockSwitch.addEventListener('click', function () { setSound(!soundOn); });
+  sel.addEventListener('change', function () { setMood(sel.value); if (!soundOn) setSound(true); });
+  $('dock-vol').addEventListener('input', function (e) { Music.volume(parseFloat(e.target.value)); });
+
+  document.body.classList.add('locked');
+  document.addEventListener('keydown', function (e) {
+    var tag = (e.target.tagName || '').toLowerCase();
+    if (!entered && e.key === 'Escape') { enter(); return; }
+    if (!entered) unlock();
+    if ((e.key === 'm' || e.key === 'M') && tag !== 'input' && tag !== 'select' && tag !== 'textarea' && !e.ctrlKey && !e.metaKey) setSound(!soundOn);
+  });
+
+  /* background tabs slow down timers, so fade out while hidden and resume on return */
+  var resume = false;
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden && Music.isPlaying()) { resume = true; Music.stop(); render(); }
+    else if (!document.hidden && resume) { resume = false; if (soundOn) Music.start(mood); render(); }
+  });
+
+  render();
+
+  /* greet logged-in visitors */
+  try {
+    var u = JSON.parse(localStorage.getItem('db_user'));
+    if (u && (u.name || u.email)) {
+      var first = (u.name || u.email.split('@')[0]).split(' ')[0];
+      var nl = $('nav-login'); nl.textContent = 'Hi, ' + first; nl.classList.add('hi');
+      $('mob-login').textContent = 'My account (' + first + ')';
+    }
+  } catch (e) {}
+})();
+
+/* ---------- nav dropdowns ---------- */
+(function () {
+  var items = document.querySelectorAll('.nav .dd');
+  function closeAll(except) { items.forEach(function (d) { if (d !== except) { d.classList.remove('open'); d.querySelector('.dd-btn').setAttribute('aria-expanded', 'false'); } }); }
+  items.forEach(function (d) {
+    var b = d.querySelector('.dd-btn');
+    b.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var open = !d.classList.contains('open'); closeAll(d);
+      d.classList.toggle('open', open); b.setAttribute('aria-expanded', String(open));
+    });
+  });
+  document.addEventListener('click', function (e) { if (!e.target.closest('.nav .dd')) closeAll(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeAll(); });
+  document.querySelectorAll('.dd-menu a').forEach(function (a) {
+    a.addEventListener('click', function () {
+      var f = a.getAttribute('data-filter');
+      if (f) { var chip = document.querySelector('.chip[data-f="' + f + '"]'); if (chip) chip.click(); }
+      closeAll();
+    });
+  });
+})();
+
 </script>
 
 </body>

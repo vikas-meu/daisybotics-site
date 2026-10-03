@@ -4,12 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Log in · Daisy Botics</title>
+<meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloock&family=Atkinson+Hyperlegible:wght@400;700&family=VT323&display=swap">
 <style>
 :root{
-  --night:#140d22;--dusk:#1f1534;--mist:#2c2147;--bone:#e9e3fb;--haze:#a99fcf;--peri:#8c8cf0;--petal:#fbeef4;--core:#f3b866;--rose:#ec93b8;--bad:#ff8f8f;
+  --night:#140d22;--dusk:#1f1534;--mist:#2c2147;--bone:#e9e3fb;--haze:#a99fcf;--peri:#8c8cf0;--petal:#fbeef4;--core:#f3b866;--rose:#ec93b8;
+  --sun:#ffcf3d;--tang:#ff8b24;--bad:#ff8f8f;--good:#9fe2a8;
   --f-display:"Gloock","Georgia",serif;--f-body:"Atkinson Hyperlegible","Segoe UI",system-ui,sans-serif;--f-crt:"VT323","Courier New",monospace;
   color-scheme:dark;
 }
@@ -17,7 +19,7 @@
 html,body{height:100%}
 body{margin:0;background:var(--night);color:var(--bone);font:400 16px/1.6 var(--f-body);padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}
 a{color:var(--peri)}a:hover{color:var(--petal)}
-:focus-visible{outline:2px solid var(--core);outline-offset:3px;border-radius:4px}
+:focus-visible{outline:2px solid var(--sun);outline-offset:3px;border-radius:4px}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 .page{min-height:100%;display:grid;grid-template-columns:1fr 1fr}
 .art{position:relative;overflow:hidden;background:var(--dusk)}
@@ -27,7 +29,7 @@ a{color:var(--peri)}a:hover{color:var(--petal)}
 .side{display:grid;align-content:center;justify-items:center;padding:40px clamp(16px,5vw,64px)}
 .box{width:100%;max-width:420px;display:grid;gap:22px}
 .brand{display:flex;align-items:center;gap:10px;color:var(--petal);text-decoration:none;font:400 1.4rem var(--f-display)}
-.brand svg{width:28px;height:28px}
+.brand svg{width:30px;height:30px}
 h1{font:400 clamp(2.2rem,5vw,2.9rem)/1.05 var(--f-display);color:var(--petal);margin:0;text-wrap:balance}
 .sub{color:var(--haze);margin:0}
 .tabs{display:grid;grid-template-columns:1fr 1fr;background:var(--dusk);border:1px solid var(--mist);border-radius:999px;padding:4px}
@@ -38,21 +40,30 @@ label{display:grid;gap:6px;font-size:.92rem;color:var(--bone)}
 input{width:100%;background:var(--dusk);border:1px solid var(--mist);border-radius:12px;padding:13px 14px;color:var(--petal);font:400 1rem var(--f-body)}
 input:focus{outline:none;border-color:var(--peri);box-shadow:0 0 0 4px rgba(140,140,240,.18)}
 input[aria-invalid="true"]{border-color:var(--bad)}
-.row{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:.9rem;color:var(--haze)}
+.row{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:.9rem;color:var(--haze);flex-wrap:wrap}
 .row label{display:flex;align-items:center;gap:8px;font-size:.9rem;color:var(--haze)}
 .row input{width:auto}
 .btn{display:flex;justify-content:center;align-items:center;gap:10px;width:100%;padding:14px;border-radius:999px;font:700 1rem var(--f-body);cursor:pointer;border:1px solid transparent;text-decoration:none}
-.btn-gold{background:var(--core);color:var(--night)}
-.btn-gold:hover{box-shadow:0 0 0 6px rgba(243,184,102,.2)}
-.btn-ghost{background:transparent;border-color:var(--mist);color:var(--bone)}
-.btn-ghost:hover{border-color:var(--peri)}
+.btn:disabled{opacity:.6;cursor:wait}
+.btn-gold{background:var(--sun);color:var(--night)}
+.btn-gold:hover{box-shadow:0 0 0 6px rgba(255,207,61,.2);color:var(--night)}
+.btn-ghost{background:var(--petal);color:#2a2340;border-color:var(--petal)}
+.btn-ghost:hover{box-shadow:0 0 0 6px rgba(251,238,244,.15)}
+.btn-line{background:transparent;border-color:var(--mist);color:var(--bone)}
+.btn-line:hover{border-color:var(--peri);color:var(--petal)}
 .or{display:flex;align-items:center;gap:12px;color:var(--haze);font-size:.85rem}
 .or::before,.or::after{content:"";flex:1;height:1px;background:var(--mist)}
-.err{color:var(--bad);font-size:.9rem;min-height:1.2em;margin:0}
+.msg{font-size:.92rem;min-height:1.3em;margin:0;color:var(--bad)}
+.msg.ok{color:var(--good)}
 .note{font-size:.85rem;color:var(--haze);margin:0}
-.welcome{display:grid;gap:16px;padding:26px;border:1px solid var(--mist);border-radius:20px;background:radial-gradient(90% 120% at 100% 0%,rgba(236,147,184,.18),transparent 60%),var(--dusk)}
-.welcome .crt{font:400 1.2rem var(--f-crt);color:var(--core)}
+.welcome{display:grid;gap:16px;padding:26px;border:1px solid var(--mist);border-radius:20px;background:radial-gradient(90% 120% at 100% 0%,rgba(255,139,36,.16),transparent 60%),var(--dusk)}
+.welcome .crt{font:400 1.2rem var(--f-crt);color:var(--sun)}
+.who{display:flex;align-items:center;gap:14px}
+.who img,.who svg{width:56px;height:56px;border-radius:50%;flex:none;border:2px solid var(--sun);object-fit:cover;background:var(--mist)}
+.who h1{font-size:2rem}
 .welcome ul{margin:0;padding-left:18px;color:var(--haze);display:grid;gap:4px}
+.verify{font-size:.9rem;color:var(--sun);margin:0}
+.mode-badge{justify-self:start;font:400 1rem var(--f-crt);color:var(--night);background:var(--sun);border-radius:6px;padding:1px 8px}
 [hidden]{display:none!important}
 @media (max-width:820px){
   .page{grid-template-columns:1fr;grid-template-rows:220px auto}
@@ -60,14 +71,20 @@ input[aria-invalid="true"]{border-color:var(--bad)}
   .art .quote{font-size:1.1rem}
 }
 </style>
+<script src="firebase-config.js"></script>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
-  <symbol id="daisy" viewBox="0 0 40 40"><g fill="#fbeef4">
-    <ellipse cx="20" cy="8" rx="4" ry="8"/><ellipse cx="20" cy="32" rx="4" ry="8"/><ellipse cx="8" cy="20" rx="8" ry="4"/><ellipse cx="32" cy="20" rx="8" ry="4"/>
-    <ellipse cx="11.5" cy="11.5" rx="4" ry="8" transform="rotate(-45 11.5 11.5)"/><ellipse cx="28.5" cy="28.5" rx="4" ry="8" transform="rotate(-45 28.5 28.5)"/>
-    <ellipse cx="28.5" cy="11.5" rx="4" ry="8" transform="rotate(45 28.5 11.5)"/><ellipse cx="11.5" cy="28.5" rx="4" ry="8" transform="rotate(45 11.5 28.5)"/>
-  </g><circle cx="20" cy="20" r="6" fill="#f3b866"/><circle cx="20" cy="20" r="2.2" fill="#ec93b8"/></symbol>
+  <symbol id="bloom" viewBox="-50 -50 100 100">
+    <g fill="#ffcf3d">
+      <ellipse cx="0" cy="-24" rx="14" ry="22"/>
+      <ellipse cx="0" cy="-24" rx="14" ry="22" transform="rotate(72)"/>
+      <ellipse cx="0" cy="-24" rx="14" ry="22" transform="rotate(144)"/>
+      <ellipse cx="0" cy="-24" rx="14" ry="22" transform="rotate(216)"/>
+      <ellipse cx="0" cy="-24" rx="14" ry="22" transform="rotate(288)"/>
+    </g>
+    <circle r="12" fill="#ff8b24"/>
+  </symbol>
 </defs></svg>
 
 <div class="page">
@@ -78,10 +95,11 @@ input[aria-invalid="true"]{border-color:var(--bad)}
 
   <div class="side">
     <div class="box">
-      <a class="brand" href="index.html"><svg><use href="#daisy"/></svg>Daisy Botics</a>
+      <a class="brand" href="index.html"><svg><use href="#bloom"/></svg>Daisy Botics</a>
 
       <div id="auth">
         <div style="display:grid;gap:8px;margin-bottom:22px">
+          <span class="mode-badge" id="preview-badge" hidden>preview mode</span>
           <h1 id="title">Welcome back, builder</h1>
           <p class="sub" id="subtitle">Log in to your courses and live sessions.</p>
         </div>
@@ -90,6 +108,13 @@ input[aria-invalid="true"]{border-color:var(--bad)}
           <button role="tab" id="tab-login" aria-selected="true" type="button">Log in</button>
           <button role="tab" id="tab-signup" aria-selected="false" type="button">Create account</button>
         </div>
+
+        <button class="btn btn-ghost" id="google" type="button">
+          <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg>
+          Continue with Google
+        </button>
+
+        <div class="or" style="margin-block:18px">or use email</div>
 
         <form id="form" novalidate>
           <label id="name-wrap" hidden>Your name
@@ -105,21 +130,15 @@ input[aria-invalid="true"]{border-color:var(--bad)}
             <label><input type="checkbox" id="remember" checked> Keep me logged in</label>
             <a href="#" id="forgot">Forgot password?</a>
           </div>
-          <p class="err" id="err" role="alert"></p>
+          <p class="msg" id="msg" role="alert"></p>
           <button class="btn btn-gold" id="submit" type="submit">Log in</button>
         </form>
-
-        <div class="or" style="margin-block:18px">or</div>
-        <button class="btn btn-ghost" id="google" type="button">
-          <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg>
-          Continue with Google
-        </button>
-        <p class="note" style="margin-top:18px">Student accounts are in early access. Courses open soon, and you'll be first to know.</p>
       </div>
 
       <div class="welcome" id="welcome" hidden>
         <span class="crt">&gt; login ok</span>
-        <h1 id="welcome-title">Hi, builder</h1>
+        <div class="who"><span id="who-pic"></span><h1 id="welcome-title">Hi, builder</h1></div>
+        <p class="verify" id="verify" hidden>We sent a confirmation link to your email. Open it to verify your account.</p>
         <p class="sub">You're in. Here's what's coming to your dashboard:</p>
         <ul>
           <li>Robotics from zero, opening soon</li>
@@ -128,81 +147,162 @@ input[aria-invalid="true"]{border-color:var(--bad)}
           <li>Live build sessions, announced on Discord</li>
         </ul>
         <a class="btn btn-gold" href="https://discord.com/invite/r7DY9augb9" target="_blank" rel="noopener">Join the Discord</a>
-        <button class="btn btn-ghost" id="logout" type="button">Log out</button>
+        <a class="btn btn-line" href="index.html">Back to the site</a>
+        <button class="btn btn-line" id="logout" type="button">Log out</button>
       </div>
 
-      <a href="index.html" style="font-size:.92rem">Back to the site</a>
+      <a href="index.html" style="font-size:.92rem" id="back-link">Back to the site</a>
     </div>
   </div>
 </div>
 
-<script>
-/* ============================================================
-   AUTH — currently in PREVIEW MODE (no server yet).
-   Nothing is sent anywhere and passwords are never stored.
-   To go live, create a free Firebase project, enable Email/Password
-   + Google sign-in, paste its config below, and the hooks marked
-   FIREBASE will take over.
-   ============================================================ */
-var FIREBASE_CONFIG = null; // e.g. { apiKey:"...", authDomain:"daisybotics.firebaseapp.com", projectId:"daisybotics" }
+<script type="module">
+const $ = (id) => document.getElementById(id);
+const store = {
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} },
+  get(k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } },
+  del(k) { try { localStorage.removeItem(k); } catch (e) {} }
+};
+let mode = 'login';
 
-(function(){
-  var mode='login';
-  var $=function(id){return document.getElementById(id)};
-  var store={get:function(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}},
-             set:function(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}},
-             del:function(k){try{localStorage.removeItem(k)}catch(e){}}};
+function say(text, ok) { const m = $('msg'); m.textContent = text || ''; m.classList.toggle('ok', !!ok); }
+function busy(on, label) { const b = $('submit'); b.disabled = on; $('google').disabled = on; b.textContent = on ? label : (mode === 'signup' ? 'Create account' : 'Log in'); }
 
-  function setMode(m){
-    mode=m;
-    var s=m==='signup';
-    $('tab-login').setAttribute('aria-selected',!s);
-    $('tab-signup').setAttribute('aria-selected',s);
-    $('name-wrap').hidden=!s;
-    $('login-extras').hidden=s;
-    $('title').textContent=s?'Start building with us':'Welcome back, builder';
-    $('subtitle').textContent=s?'Create an account to join courses and live sessions.':'Log in to your courses and live sessions.';
-    $('submit').textContent=s?'Create account':'Log in';
-    $('password').autocomplete=s?'new-password':'current-password';
-    $('err').textContent='';
+function setMode(m) {
+  mode = m;
+  const s = m === 'signup';
+  $('tab-login').setAttribute('aria-selected', String(!s));
+  $('tab-signup').setAttribute('aria-selected', String(s));
+  $('name-wrap').hidden = !s;
+  $('login-extras').hidden = s;
+  $('title').textContent = s ? 'Start building with us' : 'Welcome back, builder';
+  $('subtitle').textContent = s ? 'Create an account to join courses and live sessions.' : 'Log in to your courses and live sessions.';
+  $('submit').textContent = s ? 'Create account' : 'Log in';
+  $('password').autocomplete = s ? 'new-password' : 'current-password';
+  say('');
+}
+$('tab-login').onclick = () => setMode('login');
+$('tab-signup').onclick = () => setMode('signup');
+if (location.hash === '#signup') setMode('signup');
+
+function showWelcome(u) {
+  const name = u.displayName || u.name || (u.email || '').split('@')[0] || 'builder';
+  store.set('db_user', { name, email: u.email || '', photo: u.photoURL || '' });
+  $('auth').hidden = true; $('back-link').hidden = true; $('welcome').hidden = false;
+  $('welcome-title').textContent = 'Hi, ' + name.split(' ')[0];
+  const pic = $('who-pic');
+  pic.innerHTML = u.photoURL ? '<img alt="" referrerpolicy="no-referrer">' : '<svg><use href="#bloom"/></svg>';
+  if (u.photoURL) pic.querySelector('img').src = u.photoURL;
+  const needsVerify = u.emailVerified === false && (u.providerData || []).some(p => p.providerId === 'password');
+  $('verify').hidden = !needsVerify;
+}
+function showAuth() {
+  store.del('db_user');
+  $('welcome').hidden = true; $('auth').hidden = false; $('back-link').hidden = false;
+}
+
+function validate() {
+  const email = $('email'), pw = $('password'), name = $('name');
+  [email, pw, name].forEach(i => i.removeAttribute('aria-invalid'));
+  if (mode === 'signup' && !name.value.trim()) { name.setAttribute('aria-invalid', 'true'); say('Add your name so we know what to call you.'); name.focus(); return null; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) { email.setAttribute('aria-invalid', 'true'); say('That email looks incomplete. Check it and try again.'); email.focus(); return null; }
+  if (pw.value.length < 8) { pw.setAttribute('aria-invalid', 'true'); say('Passwords need at least 8 characters.'); pw.focus(); return null; }
+  say('');
+  return { email: email.value.trim(), pw: pw.value, name: name.value.trim() };
+}
+
+const ERR = {
+  'auth/invalid-credential': 'That email and password don\'t match. Try again, or reset your password.',
+  'auth/wrong-password': 'That email and password don\'t match. Try again, or reset your password.',
+  'auth/user-not-found': 'No account uses that email yet. Switch to "Create account".',
+  'auth/email-already-in-use': 'An account already uses that email. Log in instead, or reset your password.',
+  'auth/weak-password': 'Choose a stronger password: at least 8 characters, mixing letters and numbers.',
+  'auth/invalid-email': 'That email looks incomplete. Check it and try again.',
+  'auth/too-many-requests': 'Too many attempts. Wait a few minutes, then try again.',
+  'auth/network-request-failed': 'No connection to the sign-in service. Check your internet and try again.',
+  'auth/popup-closed-by-user': 'The Google window was closed before sign-in finished. Try again.',
+  'auth/cancelled-popup-request': '',
+  'auth/unauthorized-domain': 'This website address isn\'t allowed to sign in yet. The site owner needs to add it in Firebase → Authentication → Settings → Authorized domains.',
+  'auth/operation-not-allowed': 'This sign-in method isn\'t switched on yet. The site owner needs to enable it in Firebase → Authentication → Sign-in method.'
+};
+const explain = (e) => (e && e.code in ERR) ? ERR[e.code] : 'Sign-in didn\'t work (' + ((e && e.code) || 'unknown error') + '). Try again in a moment.';
+
+/* ---------- live mode (Firebase) or preview mode ---------- */
+const cfg = window.DAISY_FIREBASE;
+let api = null;
+
+if (cfg && cfg.apiKey) {
+  try {
+    const V = '10.12.2';
+    const { initializeApp } = await import(`https://www.gstatic.com/firebasejs/${V}/firebase-app.js`);
+    const A = await import(`https://www.gstatic.com/firebasejs/${V}/firebase-auth.js`);
+    const auth = A.getAuth(initializeApp(cfg));
+    auth.useDeviceLanguage();
+    const google = new A.GoogleAuthProvider();
+    google.setCustomParameters({ prompt: 'select_account' });
+
+    A.getRedirectResult(auth).catch(e => say(explain(e)));
+    A.onAuthStateChanged(auth, u => u ? showWelcome(u) : showAuth());
+
+    api = {
+      async login({ email, pw }) {
+        await A.setPersistence(auth, $('remember').checked ? A.browserLocalPersistence : A.browserSessionPersistence);
+        await A.signInWithEmailAndPassword(auth, email, pw);
+      },
+      async signup({ email, pw, name }) {
+        const cred = await A.createUserWithEmailAndPassword(auth, email, pw);
+        await A.updateProfile(cred.user, { displayName: name });
+        try { await A.sendEmailVerification(cred.user); } catch (e) {}
+        showWelcome({ ...cred.user, displayName: name, emailVerified: false, providerData: [{ providerId: 'password' }] });
+      },
+      async google() {
+        try { await A.signInWithPopup(auth, google); }
+        catch (e) {
+          if (e.code === 'auth/popup-blocked' || e.code === 'auth/operation-not-supported-in-this-environment') await A.signInWithRedirect(auth, google);
+          else throw e;
+        }
+      },
+      reset: (email) => A.sendPasswordResetEmail(auth, email),
+      logout: () => A.signOut(auth)
+    };
+  } catch (e) {
+    say('Couldn\'t load the sign-in service. Check your connection and refresh the page.');
   }
-  $('tab-login').onclick=function(){setMode('login')};
-  $('tab-signup').onclick=function(){setMode('signup')};
-  if(location.hash==='#signup') setMode('signup');
-
-  function showWelcome(user){
-    $('auth').hidden=true;$('welcome').hidden=false;
-    $('welcome-title').textContent='Hi, '+(user.name||user.email.split('@')[0]);
-  }
-  var existing=store.get('db_user');
-  if(existing) showWelcome(existing);
-
-  $('form').addEventListener('submit',function(e){
-    e.preventDefault();
-    var email=$('email'),pw=$('password'),name=$('name'),err=$('err');
-    [email,pw,name].forEach(function(i){i.removeAttribute('aria-invalid')});
-    if(mode==='signup' && !name.value.trim()){name.setAttribute('aria-invalid','true');err.textContent='Add your name so we know what to call you.';name.focus();return}
-    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())){email.setAttribute('aria-invalid','true');err.textContent='That email looks incomplete. Check it and try again.';email.focus();return}
-    if(pw.value.length<8){pw.setAttribute('aria-invalid','true');err.textContent='Passwords need at least 8 characters.';pw.focus();return}
-    err.textContent='';
-    // FIREBASE: replace this block with createUserWithEmailAndPassword / signInWithEmailAndPassword
-    var user={email:email.value.trim(),name:mode==='signup'?name.value.trim():(store.get('db_user_name')||'')};
-    if(mode==='signup') store.set('db_user_name',user.name);
-    if($('remember').checked||mode==='signup') store.set('db_user',user);
-    showWelcome(user);
-  });
-
-  $('google').onclick=function(){
-    // FIREBASE: signInWithPopup(auth, new GoogleAuthProvider())
-    $('err').textContent='Google sign-in turns on once accounts go live. Use email for now.';
+} else {
+  /* preview mode: nothing leaves the browser and passwords are never stored */
+  $('preview-badge').hidden = false;
+  const existing = store.get('db_user');
+  if (existing) showWelcome(existing);
+  api = {
+    async login({ email }) { showWelcome({ email, displayName: (store.get('db_user_name') || '') }); },
+    async signup({ email, name }) { store.set('db_user_name', name); showWelcome({ email, displayName: name }); },
+    async google() { throw { code: 'preview/google' }; },
+    async reset() { throw { code: 'preview/reset' }; },
+    async logout() { showAuth(); }
   };
-  $('forgot').onclick=function(e){
-    e.preventDefault();
-    // FIREBASE: sendPasswordResetEmail(auth, email)
-    $('err').textContent='Password reset arrives with full accounts. Write to vikashsnghthkr@gmail.com for help.';
-  };
-  $('logout').onclick=function(){store.del('db_user');$('welcome').hidden=true;$('auth').hidden=false;setMode('login')};
-})();
+  ERR['preview/google'] = 'Google sign-in turns on once the site owner connects Firebase. Use email for now.';
+  ERR['preview/reset'] = 'Password reset turns on once accounts go live. Write to vikashsnghthkr@gmail.com for help.';
+}
+
+$('form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const v = validate(); if (!v || !api) return;
+  busy(true, mode === 'signup' ? 'Creating your account…' : 'Logging in…');
+  try { await api[mode](v); } catch (err) { say(explain(err)); } finally { busy(false); }
+});
+$('google').onclick = async () => {
+  if (!api) return;
+  say(''); busy(true, 'Opening Google…');
+  try { await api.google(); } catch (err) { say(explain(err)); } finally { busy(false); }
+};
+$('forgot').onclick = async (e) => {
+  e.preventDefault();
+  const email = $('email').value.trim();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { $('email').setAttribute('aria-invalid', 'true'); say('Type your email above first, then tap "Forgot password?" again.'); $('email').focus(); return; }
+  try { await api.reset(email); say('If an account uses ' + email + ', a reset link is on its way. Check your inbox and spam folder.', true); }
+  catch (err) { say(explain(err)); }
+};
+$('logout').onclick = async () => { try { await api.logout(); } catch (e) {} showAuth(); setMode('login'); };
 </script>
 </body>
 </html>
