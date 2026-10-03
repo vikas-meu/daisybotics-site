@@ -1,0 +1,569 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Daisy Botics</title>
+<meta name="description" content="Daisy Botics — robots, courses and live build sessions by Vikas Singh Thakur, robotics engineer from Raipur.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloock&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=VT323&display=swap">
+<style>
+/* Layout: night-garden. Left-aligned editorial text against a glowing image stack; a CRT readout voice for robot details; daisies drift through the hero only. */
+:root{
+  --night:#140d22;      /* deep plum night sky */
+  --dusk:#1f1534;       /* raised surface */
+  --mist:#2c2147;       /* borders, wells */
+  --bone:#e9e3fb;       /* main text, lavender bone */
+  --haze:#a99fcf;       /* secondary text */
+  --peri:#8c8cf0;       /* periwinkle glow, links */
+  --petal:#fbeef4;      /* daisy petal */
+  --core:#f3b866;       /* daisy core gold, the one accent */
+  --rose:#ec93b8;       /* blush, used sparingly */
+  --f-display:"Gloock", "Georgia", serif;
+  --f-body:"Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --f-crt:"VT323", "Courier New", monospace;
+  --wrap:1180px;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--night);color:var(--bone);font:400 17px/1.65 var(--f-body);padding-inline:clamp(16px,4vw,40px);overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opacity:.07;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+a{color:var(--peri);text-underline-offset:3px}
+a:hover{color:var(--petal)}
+:focus-visible{outline:2px solid var(--core);outline-offset:3px;border-radius:4px}
+img{max-width:100%;display:block}
+h1,h2,h3{font-family:var(--f-display);font-weight:400;line-height:1.08;text-wrap:balance;margin:0;color:var(--petal)}
+h2{font-size:clamp(2rem,4.4vw,3.3rem)}
+h3{font-size:1.45rem}
+p{margin:0}
+.wrap{max-width:var(--wrap);margin-inline:auto}
+.crt{font-family:var(--f-crt);font-size:1.2rem;line-height:1.15;color:var(--core);letter-spacing:.02em}
+.lede{color:var(--haze);max-width:60ch;font-size:1.08rem}
+section{padding-block:clamp(64px,10vw,120px)}
+.sec-head{display:grid;gap:14px;margin-bottom:44px;max-width:720px}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:10px;padding:13px 22px;border-radius:999px;font:700 .98rem var(--f-body);text-decoration:none;border:1px solid transparent;cursor:pointer;transition:transform .2s,box-shadow .2s,background .2s}
+.btn-gold{background:var(--core);color:var(--night)}
+.btn-gold:hover{color:var(--night);box-shadow:0 0 0 6px color-mix(in srgb,var(--core) 22%,transparent);transform:translateY(-1px)}
+.btn-ghost{border-color:var(--mist);color:var(--bone);background:color-mix(in srgb,var(--dusk) 60%,transparent)}
+.btn-ghost:hover{border-color:var(--peri);color:var(--petal)}
+
+/* nav */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;margin-inline:calc(-1 * clamp(16px,4vw,40px));padding:14px clamp(16px,4vw,40px);
+  background:color-mix(in srgb,var(--night) 78%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid color-mix(in srgb,var(--mist) 60%,transparent)}
+.nav .wrap{display:flex;align-items:center;gap:24px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--petal);font:400 1.5rem var(--f-display);white-space:nowrap}
+.brand svg{width:30px;height:30px;flex:none}
+.nav-links{display:flex;gap:26px;margin-left:auto;list-style:none;padding:0;margin-block:0}
+.nav-links a{color:var(--haze);text-decoration:none;font-size:.95rem}
+.nav-links a:hover{color:var(--petal)}
+.nav .btn{padding:9px 18px;font-size:.9rem}
+.menu-btn{display:none;margin-left:auto;background:none;border:1px solid var(--mist);color:var(--bone);border-radius:10px;padding:8px 12px;font:inherit;cursor:pointer}
+@media (max-width:880px){
+  .menu-btn{display:block}
+  .nav-links{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:0;background:var(--dusk);border-bottom:1px solid var(--mist);padding:8px clamp(16px,4vw,40px) 16px}
+  .nav-links.open{display:flex}
+  .nav-links a{display:block;padding:12px 0;font-size:1.05rem}
+  .nav .btn{display:none}
+  .nav-links .mob-login{display:block}
+}
+.mob-login{display:none}
+
+/* hero */
+.hero{position:relative;padding-block:clamp(40px,7vw,90px) clamp(56px,8vw,100px)}
+#petals{position:absolute;inset:0 calc(-1 * clamp(16px,4vw,40px));width:calc(100% + 2 * clamp(16px,4vw,40px));height:100%;pointer-events:none;z-index:0}
+.hero .wrap{position:relative;z-index:1;display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(32px,5vw,72px);align-items:center}
+.hero-copy{display:grid;gap:26px;min-width:0}
+.boot{display:grid;gap:2px}
+.boot span{opacity:.55}
+.boot span:last-child{opacity:1}
+.hero h1{font-size:clamp(3rem,7.6vw,6.2rem);letter-spacing:-.01em}
+.hero h1 .soft{display:block;color:var(--haze);font-size:.5em;margin-top:.35em;letter-spacing:0}
+.hero .ctas{display:flex;flex-wrap:wrap;gap:12px}
+.stack{position:relative;aspect-ratio:3/4;max-width:440px;width:100%;justify-self:center}
+.stack figure{position:absolute;margin:0;border-radius:22px;overflow:hidden;background:var(--dusk);box-shadow:0 30px 80px -20px #000,0 0 90px -10px color-mix(in srgb,var(--peri) 45%,transparent)}
+.stack .main{inset:0;z-index:2}
+.stack .main img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.6s ease}
+.stack .main img.on{opacity:1}
+.stack .back{width:58%;aspect-ratio:3/4;left:-16%;bottom:-8%;z-index:1;transform:rotate(-8deg);opacity:.8}
+.stack .back img{width:100%;height:100%;object-fit:cover;filter:saturate(.8)}
+.stack .tag{position:absolute;right:-6%;top:8%;z-index:3;background:var(--night);border:1px solid var(--mist);border-radius:14px;padding:10px 14px;transform:rotate(3deg)}
+.stack .tag b{display:block;font:400 1.6rem var(--f-crt);color:var(--petal);line-height:1}
+@media (max-width:880px){.hero .wrap{grid-template-columns:1fr}.stack{max-width:340px;margin-top:20px}}
+
+/* ribbon of facts */
+.ribbon{border-block:1px solid var(--mist);padding-block:26px;margin-inline:calc(-1 * clamp(16px,4vw,40px));padding-inline:clamp(16px,4vw,40px);background:color-mix(in srgb,var(--dusk) 55%,transparent)}
+.ribbon ul{list-style:none;margin:0 auto;padding:0;max-width:var(--wrap);display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:22px 32px}
+.ribbon li{display:grid;gap:2px}
+.ribbon b{font:400 2.1rem/1 var(--f-display);color:var(--petal);font-variant-numeric:tabular-nums}
+.ribbon span{color:var(--haze);font-size:.92rem;line-height:1.4}
+
+/* work */
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
+.chip{border:1px solid var(--mist);background:transparent;color:var(--haze);border-radius:999px;padding:7px 15px;font:400 .92rem var(--f-body);cursor:pointer}
+.chip:hover{color:var(--petal);border-color:var(--haze)}
+.chip[aria-pressed="true"]{background:var(--petal);color:var(--night);border-color:var(--petal)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,330px),1fr));gap:22px}
+.proj{display:grid;grid-template-rows:auto 1fr;background:var(--dusk);border:1px solid var(--mist);border-radius:18px;overflow:hidden;transition:transform .25s,border-color .25s}
+.proj:hover{transform:translateY(-3px);border-color:color-mix(in srgb,var(--peri) 60%,var(--mist))}
+.thumb{position:relative;aspect-ratio:16/10;overflow:hidden;
+  background:
+   radial-gradient(120% 90% at 85% 10%,color-mix(in srgb,var(--h) 55%,transparent),transparent 60%),
+   linear-gradient(transparent 23px,color-mix(in srgb,var(--h) 14%,transparent) 24px) 0 0/24px 24px,
+   linear-gradient(90deg,transparent 23px,color-mix(in srgb,var(--h) 14%,transparent) 24px) 0 0/24px 24px,
+   var(--night)}
+.thumb pre{position:absolute;left:18px;bottom:16px;right:18px;margin:0;font:400 1.15rem/1.15 var(--f-crt);color:var(--petal);white-space:pre-wrap;text-shadow:0 0 8px color-mix(in srgb,var(--h) 80%,transparent)}
+.thumb pre i{font-style:normal;color:var(--core)}
+.thumb .flower{position:absolute;right:16px;top:14px;width:34px;height:34px;opacity:.9}
+.thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.thumb::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(transparent 0 2px,rgba(0,0,0,.18) 2px 3px);pointer-events:none}
+.proj-body{display:grid;gap:12px;padding:20px 22px 22px;align-content:start;min-width:0}
+.proj-body p{color:var(--haze);font-size:.97rem}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tags span{font-size:.8rem;color:var(--bone);background:var(--mist);border-radius:6px;padding:2px 8px}
+.proj-body a{font-weight:700;font-size:.93rem;margin-top:2px;justify-self:start}
+.proj[hidden]{display:none}
+
+.bench{margin-top:56px;display:grid;grid-template-columns:260px 1fr;gap:32px;padding-top:40px;border-top:1px dashed var(--mist)}
+.bench ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 28px}
+.bench li{display:grid;gap:4px;min-width:0}
+.bench li b{color:var(--petal);font-weight:700}
+.bench li span{color:var(--haze);font-size:.94rem}
+@media (max-width:760px){.bench,.bench ul{grid-template-columns:1fr}}
+
+/* courses */
+.courses{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:20px}
+.course{position:relative;display:grid;gap:12px;align-content:start;padding:26px 24px 24px;border-radius:18px;background:linear-gradient(180deg,color-mix(in srgb,var(--dusk) 100%,transparent),var(--night));border:1px solid var(--mist)}
+.course .lvl{font:400 1.15rem var(--f-crt);color:var(--core)}
+.course p{color:var(--haze);font-size:.96rem}
+.course ul{margin:0;padding-left:18px;color:var(--bone);font-size:.92rem;display:grid;gap:3px}
+.course .status{margin-top:8px;font-size:.85rem;color:var(--rose)}
+
+.live{margin-top:28px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;padding:28px;border-radius:22px;border:1px solid var(--mist);
+  background:radial-gradient(80% 140% at 0% 50%,color-mix(in srgb,var(--rose) 18%,transparent),transparent 70%),var(--dusk)}
+.live h3{margin-bottom:6px}
+.live p{color:var(--haze);max-width:60ch}
+.live .ctas{display:flex;flex-wrap:wrap;gap:10px}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--rose);margin-right:8px;box-shadow:0 0 0 0 var(--rose);animation:pulse 2.4s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 10px transparent}100%{box-shadow:0 0 0 0 transparent}}
+@media (max-width:760px){.live{grid-template-columns:1fr}}
+
+/* achievements timeline */
+.timeline{list-style:none;margin:0;padding:0;display:grid;gap:0;max-width:860px}
+.timeline li{display:grid;grid-template-columns:110px 28px 1fr;gap:0 18px;min-width:0}
+.timeline .yr{font:400 1.35rem var(--f-crt);color:var(--core);padding-top:2px;text-align:right}
+.timeline .rail{position:relative}
+.timeline .rail::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--mist);transform:translateX(-50%)}
+.timeline .rail svg{position:relative;width:24px;height:24px;margin:2px auto 0;display:block;background:var(--night)}
+.timeline li:last-child .rail::before{bottom:auto;height:20px}
+.timeline .what{padding-bottom:34px;display:grid;gap:6px;min-width:0}
+.timeline .what h3{font-size:1.3rem}
+.timeline .what p{color:var(--haze);font-size:.97rem}
+@media (max-width:560px){.timeline li{grid-template-columns:64px 24px 1fr;gap:0 12px}.timeline .yr{font-size:1.1rem}}
+
+/* channels: youtube + github */
+.channels{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+@media (max-width:860px){.channels{grid-template-columns:1fr}}
+.panel{border:1px solid var(--mist);border-radius:22px;background:var(--dusk);padding:28px;display:grid;gap:18px;align-content:start;min-width:0}
+.panel-top{display:flex;align-items:center;gap:16px}
+.avatar{width:64px;height:64px;border-radius:50%;flex:none;overflow:hidden;background:var(--mist);display:grid;place-items:center;border:2px solid var(--core)}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.avatar svg{width:40px;height:40px}
+.panel-top small{display:block;color:var(--haze);font-size:.9rem}
+.screen{position:relative;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:#000;text-decoration:none;display:block}
+.screen img{width:100%;height:100%;object-fit:cover;opacity:.75;transition:opacity .3s,transform .6s}
+.screen:hover img{opacity:.95;transform:scale(1.03)}
+.screen .play{position:absolute;inset:0;display:grid;place-items:center}
+.screen .play span{width:68px;height:68px;border-radius:50%;background:color-mix(in srgb,var(--petal) 92%,transparent);display:grid;place-items:center;box-shadow:0 0 40px color-mix(in srgb,var(--peri) 70%,transparent)}
+.screen .play svg{width:24px;height:24px;margin-left:4px}
+.screen .cap{position:absolute;left:14px;bottom:12px;font:400 1.2rem var(--f-crt);color:var(--petal)}
+.stats-row{display:flex;flex-wrap:wrap;gap:10px 26px;color:var(--haze);font-size:.94rem}
+.stats-row b{color:var(--petal);font-variant-numeric:tabular-nums}
+.stack-list{display:flex;flex-wrap:wrap;gap:6px}
+.stack-list span{font-size:.82rem;border:1px solid var(--mist);border-radius:6px;padding:3px 9px;color:var(--bone)}
+.repo{display:grid;gap:4px;padding:14px 16px;border-radius:12px;background:var(--night);border:1px solid var(--mist);text-decoration:none}
+.repo b{color:var(--peri);font-weight:700}
+.repo span{color:var(--haze);font-size:.9rem}
+.repo:hover{border-color:var(--peri)}
+
+/* about */
+.about .wrap{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(32px,6vw,80px);align-items:center}
+.about figure{margin:0;border-radius:24px;overflow:hidden;max-width:420px;box-shadow:0 0 100px -20px color-mix(in srgb,var(--rose) 50%,transparent)}
+.about .copy{display:grid;gap:18px;min-width:0}
+.about .copy p{color:var(--haze);max-width:62ch}
+.about .copy p strong{color:var(--bone)}
+@media (max-width:820px){.about .wrap{grid-template-columns:1fr}.about figure{max-width:320px}}
+
+/* contact */
+.contact{text-align:left}
+.contact-box{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;padding:clamp(28px,5vw,56px);border-radius:28px;border:1px solid var(--mist);
+  background:radial-gradient(90% 120% at 100% 0%,color-mix(in srgb,var(--peri) 22%,transparent),transparent 60%),var(--dusk)}
+.contact-box > div{display:grid;gap:16px;align-content:start;min-width:0}
+.mail{display:flex;flex-wrap:wrap;align-items:center;gap:10px;font:400 1.15rem var(--f-body);color:var(--petal);word-break:break-all}
+.copy-btn{border:1px solid var(--mist);background:var(--night);color:var(--bone);border-radius:8px;padding:6px 12px;font:400 .85rem var(--f-body);cursor:pointer}
+.copy-btn:hover{border-color:var(--core)}
+.socials{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+.socials a{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--mist);text-decoration:none;color:var(--bone)}
+.socials a span{color:var(--haze);font-size:.9rem}
+.socials a:hover{color:var(--core)}
+@media (max-width:760px){.contact-box{grid-template-columns:1fr}}
+
+footer{padding-block:40px 56px;color:var(--haze);font-size:.9rem}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
+</style>
+</head>
+<body>
+
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="daisy" viewBox="0 0 40 40">
+      <g fill="#fbeef4">
+        <ellipse cx="20" cy="8" rx="4" ry="8"/><ellipse cx="20" cy="32" rx="4" ry="8"/>
+        <ellipse cx="8" cy="20" rx="8" ry="4"/><ellipse cx="32" cy="20" rx="8" ry="4"/>
+        <ellipse cx="11.5" cy="11.5" rx="4" ry="8" transform="rotate(-45 11.5 11.5)"/>
+        <ellipse cx="28.5" cy="28.5" rx="4" ry="8" transform="rotate(-45 28.5 28.5)"/>
+        <ellipse cx="28.5" cy="11.5" rx="4" ry="8" transform="rotate(45 28.5 11.5)"/>
+        <ellipse cx="11.5" cy="28.5" rx="4" ry="8" transform="rotate(45 11.5 28.5)"/>
+      </g>
+      <circle cx="20" cy="20" r="6" fill="#f3b866"/>
+      <circle cx="20" cy="20" r="2.2" fill="#ec93b8"/>
+    </symbol>
+  </defs>
+</svg>
+
+<nav class="nav" aria-label="Main">
+  <div class="wrap">
+    <a class="brand" href="#top"><svg><use href="#daisy"/></svg>Daisy Botics</a>
+    <button class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="nav-links">Menu</button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#work">Work</a></li>
+      <li><a href="#courses">Courses</a></li>
+      <li><a href="#achievements">Achievements</a></li>
+      <li><a href="#channels">YouTube &amp; GitHub</a></li>
+      <li><a href="#about">About</a></li>
+      <li class="mob-login"><a href="login.html">Log in</a></li>
+    </ul>
+    <a class="btn btn-gold" href="login.html">Log in</a>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <canvas id="petals" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <div class="hero-copy">
+      <div class="boot crt" aria-hidden="true">
+        <span>&gt; daisybotics booting…</span>
+        <span>&gt; servos: 20/20 online · camera: ok · coffee: low</span>
+        <span id="boot-last">&gt; hello, builder. pick a robot.</span>
+      </div>
+      <h1>Robots that bloom.<span class="soft">Affordable robots, and the courses to build your own.</span></h1>
+      <p class="lede">I'm Vikas, a robotics engineer from Raipur. I build field robots, humanoids and vision-guided swarms, and I teach everything I learn along the way through courses and live build sessions.</p>
+      <div class="ctas">
+        <a class="btn btn-gold" href="#courses">Explore courses</a>
+        <a class="btn btn-ghost" href="#work">See the robots</a>
+      </div>
+    </div>
+    <div class="stack" aria-label="Daisy Botics artwork">
+      <figure class="back"><img src="assets/skull2.jpg" alt=""></figure>
+      <figure class="main" id="slides">
+        <img class="on" src="assets/skull3.jpg" alt="A lavender skeleton with daisies blooming from its jaw and a glowing butterfly at its chest">
+        <img src="assets/skull5.jpg" alt="A skeleton looking up at the stars with a butterfly resting on its skull">
+        <img src="assets/skull4.jpg" alt="A daisy-covered skull reaching toward a glowing butterfly">
+        <img src="assets/skull1.jpg" alt="A skeleton among the stars with daisies along its spine">
+      </figure>
+      <div class="tag"><b>19 / 29</b><span class="crt" style="font-size:1rem">hackathons won</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="ribbon">
+  <ul>
+    <li><b>19 of 29</b><span>hackathons won, incl. IIT Madras twice, IIT Bhilai and NIT Raipur</span></li>
+    <li><b>2 + 3</b><span>patents granted, with 3 more filed and pending</span></li>
+    <li><b>₹15 Lakh</b><span>MSME innovation grant, 2025</span></li>
+    <li><b>DGCA</b><span>certified drone pilot</span></li>
+    <li><b>54</b><span>open repositories on GitHub</span></li>
+  </ul>
+</div>
+
+<main>
+<section id="work">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="crt">&gt; ls ~/robots</span>
+      <h2>Things I've built</h2>
+      <p class="lede">From a tea-serving ROS2 robot to a fish that swims and logs water data. Every one of these left the workbench and worked in front of judges, farmers or a lab full of people.</p>
+    </div>
+    <div class="filters" role="group" aria-label="Filter projects">
+      <button class="chip" aria-pressed="true" data-f="all">All</button>
+      <button class="chip" aria-pressed="false" data-f="field">Field &amp; agri</button>
+      <button class="chip" aria-pressed="false" data-f="humanoid">Humanoids &amp; arms</button>
+      <button class="chip" aria-pressed="false" data-f="vision">Autonomy &amp; vision</button>
+      <button class="chip" aria-pressed="false" data-f="water">Underwater</button>
+    </div>
+    <div class="grid" id="grid"></div>
+
+    <div class="bench">
+      <div>
+        <span class="crt">&gt; on the bench</span>
+        <h3 style="margin-top:8px">Being built right now</h3>
+      </div>
+      <ul>
+        <li><b>Daisy Blocks</b><span>A 3-actuator hybrid arm with sensorless homing, steered from Unity VR. <a href="https://github.com/vikas-meu/Daisy_Blocks_final" target="_blank" rel="noopener">Source</a></span></li>
+        <li><b>The physical terminal</b><span>A CoreXY pen plotter that writes Linux command output onto paper, in Hershey fonts.</span></li>
+        <li><b>Myoelectric hand</b><span>An EMG-driven prosthetic hand prototype for upper-limb amputees.</span></li>
+        <li><b>Chicki</b><span>An offline voice and vision assistant on Raspberry Pi 5 with a little screen for a face.</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="courses">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="crt">&gt; ./learn --with-vikas</span>
+      <h2>Learn robotics by building one</h2>
+      <p class="lede">Project-first courses taught from the same bench these robots came off. Each one ends with a working machine you built yourself.</p>
+    </div>
+    <div class="courses">
+      <article class="course">
+        <span class="lvl">Level 1 · beginner</span>
+        <h3>Robotics from zero</h3>
+        <p>Your first moving robot, without the fear.</p>
+        <ul><li>Arduino &amp; ESP32 basics</li><li>Motors, servos, sensors</li><li>Build a line-following car</li></ul>
+        <span class="status">Opening soon</span>
+      </article>
+      <article class="course">
+        <span class="lvl">Level 2 · vision</span>
+        <h3>Computer vision for robots</h3>
+        <p>Teach a robot to see and react.</p>
+        <ul><li>OpenCV &amp; HSV tracking</li><li>ArUco markers &amp; pose</li><li>MediaPipe teleoperation</li></ul>
+        <span class="status">Opening soon</span>
+      </article>
+      <article class="course">
+        <span class="lvl">Level 3 · autonomy</span>
+        <h3>ROS2 &amp; navigation</h3>
+        <p>From a URDF to a robot that drives itself.</p>
+        <ul><li>ROS2, ros2_control, URDF</li><li>SLAM &amp; Nav2</li><li>micro-ROS on microcontrollers</li></ul>
+        <span class="status">Opening soon</span>
+      </article>
+      <article class="course">
+        <span class="lvl">Level 4 · edge AI</span>
+        <h3>AI brains on the edge</h3>
+        <p>Local LLMs and voice, running on the robot.</p>
+        <ul><li>Jetson Orin &amp; Raspberry Pi 5</li><li>Ollama, VLMs, Whisper, Piper</li><li>A talking desk robot</li></ul>
+        <span class="status">Opening soon</span>
+      </article>
+    </div>
+
+    <div class="live" id="live">
+      <div>
+        <h3><span class="dot" aria-hidden="true"></span>Live build sessions</h3>
+        <p>Build along in real time, bring your broken robot, ask anything. Session times are posted first on the Discord server.</p>
+      </div>
+      <div class="ctas">
+        <a class="btn btn-gold" href="https://discord.com/invite/r7DY9augb9" target="_blank" rel="noopener">Join the Discord</a>
+        <a class="btn btn-ghost" href="login.html#signup">Get notified</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="achievements">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="crt">&gt; cat achievements.log</span>
+      <h2>Over the years</h2>
+    </div>
+    <ol class="timeline">
+      <li><span class="yr">2025</span><span class="rail"><svg><use href="#daisy"/></svg></span>
+        <div class="what"><h3>₹15 Lakh MSME grant</h3><p>Government of India innovation funding to take a robot from prototype toward a product.</p></div></li>
+      <li><span class="yr">2025</span><span class="rail"><svg><use href="#daisy"/></svg></span>
+        <div class="what"><h3>2 patents granted, 3 pending</h3><p>Two inventions granted, with three more filed and under examination.</p></div></li>
+      <li><span class="yr">2025</span><span class="rail"><svg><use href="#daisy"/></svg></span>
+        <div class="what"><h3>DGCA-certified drone pilot</h3><p>Licensed to fly drones under India's civil aviation regulator.</p></div></li>
+      <li><span class="yr">2025</span><span class="rail"><svg><use href="#daisy"/></svg></span>
+        <div class="what"><h3>Research paper: Daisy Blocks</h3><p>A novel hybrid robot arm with rack-and-pinion plus rotary joints, current-threshold homing and VR teleoperation.</p></div></li>
+      <li><span class="yr">Across</span><span class="rail"><svg><use href="#daisy"/></svg></span>
+        <div class="what"><h3>19 hackathon wins out of 29</h3><p>Including two wins at IIT Madras, plus IIT Bhilai and NIT Raipur.</p></div></li>
+      <li><span class="yr">Earlier</span><span class="rail"><svg><use href="#daisy"/></svg></span>
+        <div class="what"><h3>Showcased at IIT Bombay</h3><p>The vision-guided pick and place robotic car was exhibited at IIT Bombay.</p></div></li>
+      <li><span class="yr">Earlier</span><span class="rail"><svg><use href="#daisy"/></svg></span>
+        <div class="what"><h3>AICTE IDEA Lab</h3><p>Built and certified through SSIPMT's AICTE IDEA Lab. <a href="https://drive.google.com/drive/folders/1GKtiXttmslPjxX4zuQis-kj_OdWOeIo-" target="_blank" rel="noopener">See certificates</a></p></div></li>
+    </ol>
+  </div>
+</section>
+
+<section id="channels">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="crt">&gt; follow --everywhere</span>
+      <h2>Watch the builds, read the code</h2>
+    </div>
+    <div class="channels">
+      <article class="panel">
+        <div class="panel-top">
+          <div class="avatar" style="border-color:var(--rose)"><svg><use href="#daisy"/></svg></div>
+          <div><h3>Vikas Like Robots</h3><small>YouTube · @Pi-kas</small></div>
+        </div>
+        <a class="screen" href="https://www.youtube.com/@Pi-kas" target="_blank" rel="noopener">
+          <img src="assets/skull4.jpg" alt="">
+          <span class="play"><span><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8z" fill="#140d22"/></svg></span></span>
+          <span class="cap">&gt; now playing: every robot, start to finish</span>
+        </a>
+        <p style="color:var(--haze)">Every project I build ends up here, with the failures left in. Plus explainers on the electronics and code behind them.</p>
+        <div><a class="btn btn-ghost" href="https://www.youtube.com/@Pi-kas?sub_confirmation=1" target="_blank" rel="noopener">Subscribe on YouTube</a></div>
+      </article>
+
+      <article class="panel">
+        <div class="panel-top">
+          <div class="avatar"><img id="gh-avatar" src="https://avatars.githubusercontent.com/u/118894013?v=4" alt="Vikas on GitHub"></div>
+          <div><h3>Vikas Singh Thakur</h3><small>GitHub · vikas-meu</small></div>
+        </div>
+        <p style="color:var(--haze)">Experienced with real-life projects: ROS, micro-ROS, URDF, TinyML, AI, PCB design, embedded C and OpenCV.</p>
+        <div class="stats-row"><span><b>54</b> repositories</span><span><b>90</b> followers</span><span>Raipur, Chhattisgarh</span></div>
+        <div class="stack-list">
+          <span>C++</span><span>Python</span><span>C</span><span>Bash</span><span>ROS2</span><span>OpenCV</span><span>MediaPipe</span><span>Jetson</span><span>RealSense</span><span>Ollama</span><span>STM32</span><span>Fusion 360</span><span>PCB design</span>
+        </div>
+        <a class="repo" href="https://github.com/vikas-meu/Daisy_Blocks_final" target="_blank" rel="noopener"><b>Daisy_Blocks_final</b><span>VR-controlled robotic cube manipulation with 20 ST3215 servos, streamed from Unity.</span></a>
+        <a class="repo" href="https://github.com/vikas-meu/matrix_speech_v2" target="_blank" rel="noopener"><b>matrix_speech_v2</b><span>Pinned project on the profile.</span></a>
+        <div><a class="btn btn-ghost" href="https://github.com/vikas-meu" target="_blank" rel="noopener">Open GitHub profile</a></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="wrap">
+    <figure><img src="assets/skull2.jpg" alt="A skeleton in violet light, a glowing butterfly near its jaw"></figure>
+    <div class="copy">
+      <span class="crt">&gt; whoami</span>
+      <h2>Why daisies, on a robotics site?</h2>
+      <p>Because robots shouldn't feel cold. Daisy Botics started with one idea: <strong>build affordable robots</strong>, and show people that they can build them too.</p>
+      <p>I'm <strong>Vikas Singh Thakur</strong>, an Electronics &amp; Telecommunication student at <strong>SSIPMT Raipur</strong>. I like taking robots from a sketch on paper to actually working in front of judges, whether that's an autonomous field robot, a teleoperated humanoid, or a swarm of vision-guided cars.</p>
+      <p>The skeleton with flowers is a reminder I keep on my desk. Under every machine there's a frame of bones and wires. What grows on it is up to the builder.</p>
+      <div><a class="btn btn-ghost" href="https://drive.google.com/file/d/1Ef-v5HMM9hIanayX-EOzBuvmYxq6tG68/view" target="_blank" rel="noopener">Read my full CV</a></div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="contact-box">
+      <div>
+        <span class="crt">&gt; ping vikas</span>
+        <h2>Let's build something</h2>
+        <p class="lede">Collaborations, workshops at your college, custom robots or just a question about your project. Write in.</p>
+        <div class="mail"><span id="mail-text">vikashsnghthkr@gmail.com</span><button class="copy-btn" id="copy-mail" type="button">Copy</button></div>
+      </div>
+      <ul class="socials">
+        <li><a href="https://www.linkedin.com/in/vikas0singh0thakur" target="_blank" rel="noopener">LinkedIn <span>vikas0singh0thakur</span></a></li>
+        <li><a href="https://www.youtube.com/@Pi-kas" target="_blank" rel="noopener">YouTube <span>@Pi-kas</span></a></li>
+        <li><a href="https://github.com/vikas-meu" target="_blank" rel="noopener">GitHub <span>vikas-meu</span></a></li>
+        <li><a href="https://instagram.com/raspikash" target="_blank" rel="noopener">Instagram <span>@raspikash</span></a></li>
+        <li><a href="https://discord.com/invite/r7DY9augb9" target="_blank" rel="noopener">Discord <span>community server</span></a></li>
+        <li><a href="https://x.com/vikash_sin15940" target="_blank" rel="noopener">X <span>@vikash_sin15940</span></a></li>
+      </ul>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Daisy Botics · Raipur, India</span>
+    <span class="crt" style="font-size:1.05rem">&gt; made with solder, code and daisies</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  /* ---------- projects (from the GitHub profile README) ----------
+     To use a real photo, put it in assets/projects/ and set img: "assets/projects/name.jpg" */
+  var projects=[
+    {t:"Autonomous Serving Robot",d:"A fully autonomous ROS2 robot that delivers tea and food around a room.",f:"vision",h:"#8c8cf0",tags:["ROS2","Nav2","SLAM"],spec:"> mode: autonomous\n> payload: <i>chai x4</i>",u:"https://www.linkedin.com/posts/vikas0singh0thakur_ros-gimp-robotics-activity-7438621369568997376-UyaB"},
+    {t:"Zero-Sensor Swarm Robot",d:"A swarm robot that runs on computer vision alone. No onboard sensors at all.",f:"vision",h:"#ec93b8",tags:["OpenCV","ArUco","ESP32"],spec:"> sensors: <i>0</i>\n> cameras: 1 overhead",u:"https://www.linkedin.com/posts/vikas0singh0thakur_autonomy-hardware-software-activity-7432127289401909248-QKBH"},
+    {t:"Humanoid Robot",d:"An autonomous and teleoperable humanoid platform with gesture and voice modes.",f:"humanoid",h:"#f3b866",tags:["MediaPipe","IK","ESP32"],spec:"> arms: 2\n> modes: <i>teleop | auto</i>",u:"https://drive.google.com/file/d/1Fy3eq-QOydY7smjIZB_JT05vAy36Qsti/view"},
+    {t:"Autonomous Chemical Sprayer",d:"A field robot that sprays pesticide precisely, only where it's needed.",f:"field",h:"#9fd99b",tags:["Agri","Autonomy","Embedded"],spec:"> field: rows 1-40\n> spray: <i>targeted</i>",u:"https://drive.google.com/file/d/1VnigAlZAY25CuYimI96LOyr4zKmdhgkC/view"},
+    {t:"Zero-Chemical Weeding Cart",d:"A delta robot with a laser that finds weeds with computer vision and removes them. No chemicals used.",f:"field",h:"#c4e17f",tags:["Delta robot","Laser","CV"],spec:"> weed detected\n> laser: <i>pew</i>",u:"https://drive.google.com/file/d/1VnigAlZAY25CuYimI96LOyr4zKmdhgkC/view"},
+    {t:"Bomb-Disposal Humanoid",d:"A teleoperated humanoid that mimics your motion, with VR support, for jobs too dangerous for people.",f:"humanoid",h:"#ff9a8a",tags:["Teleop","VR","Servos"],spec:"> operator: safe\n> mimic latency: <i>low</i>",u:"https://www.linkedin.com/posts/vikas0singh0thakur_hello-everyone-excited-to-show-you-my-fully-activity-7196610413092859906-GUuu"},
+    {t:"Intelligent Robotic Manipulator",d:"An autonomous robot arm you can teach by demonstration, built for industrial tasks.",f:"humanoid",h:"#8c8cf0",tags:["Arm","Teach mode","Industry"],spec:"> record... play\n> repeat: <i>forever</i>",u:"https://drive.google.com/file/d/1QZMDb6zZF3rDuHIotun1QHWHqfYTb0Wj/view"},
+    {t:"Underwater Robotic Fish",d:"A sensor-equipped robotic fish that swims and collects aquatic data.",f:"water",h:"#6fd3e6",tags:["Aquatic","Sensors","IoT"],spec:"> depth: 1.2 m\n> pH: <i>7.1</i>",u:"https://drive.google.com/drive/folders/1GKtiXttmslPjxX4zuQis-kj_OdWOeIo-"},
+    {t:"Plant Health Monitor",d:"An IoT plant monitor that reacts to how your plant feels with expressive feedback.",f:"field",h:"#f6a3cf",tags:["IoT","Sensors","Display"],spec:"> moisture: 31%\n> mood: <i>thirsty</i>",u:"https://drive.google.com/drive/folders/1h_rmrVR2aa_9GAnVGp8nrwNlkSc8hTxr"},
+    {t:"Motion-Mimicking Robot Arm",d:"A high-precision arm that copies your movements, for hazardous-task teleoperation.",f:"humanoid",h:"#f3b866",tags:["Teleop","Precision","Servos"],spec:"> you move\n> <i>it moves</i>",u:"https://drive.google.com/drive/folders/1xYVOC6hvaQ8Omx3O-0hLnjw7k_tb_h8J"},
+    {t:"Pick & Place Robotic Car",d:"A vision-guided robotic vehicle that finds and moves objects. Showcased at IIT Bombay.",f:"vision",h:"#b39cff",tags:["Vision","Gripper","IIT Bombay"],spec:"> target: found\n> grip: <i>closed</i>",u:"https://drive.google.com/drive/folders/1YiYaS-OCfdbzMyCkLiCRTTD71vNIDVNX"},
+    {t:"Bladeless-Propulsion Submarine",d:"An eco-friendly bladeless submarine that collects water-quality data.",f:"water",h:"#7fb6ff",tags:["Aquatic","Bladeless","Eco"],spec:"> propeller: <i>none</i>\n> turbidity: logged",u:"https://drive.google.com/file/d/1eySbv-qaXEwxN_jIlMGxzyafh50tN3gb/view"}
+  ];
+  var grid=document.getElementById('grid');
+  grid.innerHTML=projects.map(function(p){
+    var thumb=p.img?'<img src="'+p.img+'" alt="'+p.t+'">':'<pre>'+p.spec+'</pre><svg class="flower"><use href="#daisy"/></svg>';
+    return '<article class="proj" data-f="'+p.f+'"><div class="thumb" style="--h:'+p.h+'">'+thumb+'</div>'+
+      '<div class="proj-body"><h3>'+p.t+'</h3><p>'+p.d+'</p><div class="tags">'+p.tags.map(function(x){return '<span>'+x+'</span>'}).join('')+'</div>'+
+      '<a href="'+p.u+'" target="_blank" rel="noopener">See it working</a></div></article>';
+  }).join('');
+  document.querySelectorAll('.chip').forEach(function(c){
+    c.addEventListener('click',function(){
+      document.querySelectorAll('.chip').forEach(function(x){x.setAttribute('aria-pressed','false')});
+      c.setAttribute('aria-pressed','true');
+      var f=c.dataset.f;
+      grid.querySelectorAll('.proj').forEach(function(el){el.hidden=!(f==='all'||el.dataset.f===f)});
+    });
+  });
+
+  /* ---------- mobile menu ---------- */
+  var mb=document.getElementById('menu-btn'),nl=document.getElementById('nav-links');
+  mb.addEventListener('click',function(){var o=nl.classList.toggle('open');mb.setAttribute('aria-expanded',o)});
+  nl.addEventListener('click',function(e){if(e.target.tagName==='A'){nl.classList.remove('open');mb.setAttribute('aria-expanded','false')}});
+
+  /* ---------- GitHub avatar fallback ---------- */
+  var av=document.getElementById('gh-avatar');
+  var avDone=false;function avFail(){if(avDone||!av.parentNode)return;avDone=true;av.outerHTML='<svg><use href="#daisy"/></svg>'}
+  av.addEventListener('error',avFail);
+  if(av.complete && av.naturalWidth===0) avFail();
+
+  /* ---------- copy email ---------- */
+  var cb=document.getElementById('copy-mail'),mt=document.getElementById('mail-text');
+  cb.addEventListener('click',function(){
+    var done=function(){cb.textContent='Copied';setTimeout(function(){cb.textContent='Copy'},1800)};
+    var sel=function(){var r=document.createRange();r.selectNodeContents(mt);var s=getSelection();s.removeAllRanges();s.addRange(r);cb.textContent='Selected';};
+    try{navigator.clipboard.writeText(mt.textContent).then(done,sel)}catch(e){sel()}
+  });
+
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- hero slideshow ---------- */
+  var imgs=document.querySelectorAll('#slides img'),k=0;
+  if(!reduce) setInterval(function(){imgs[k].classList.remove('on');k=(k+1)%imgs.length;imgs[k].classList.add('on')},5200);
+
+  /* ---------- drifting daisy petals + stars ---------- */
+  var cv=document.getElementById('petals'),ctx=cv.getContext('2d'),W,H,dpr=Math.min(devicePixelRatio||1,2),stars=[],petals=[];
+  function size(){var r=cv.getBoundingClientRect();W=r.width;H=r.height;cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
+    stars=[];for(var i=0;i<Math.round(W*H/9000);i++)stars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.3+.2,p:Math.random()*6.28});}
+  function newPetal(top){return{x:Math.random()*W,y:top?-20:Math.random()*H,s:Math.random()*6+5,vy:Math.random()*.35+.18,vx:Math.random()*.3-.1,a:Math.random()*6.28,va:(Math.random()-.5)*.02,w:Math.random()*6.28,c:Math.random()<.18?'#f3b866':(Math.random()<.3?'#ec93b8':'#fbeef4')}}
+  function draw(t){
+    ctx.clearRect(0,0,W,H);
+    stars.forEach(function(s){var a=.35+.4*Math.sin(t/900+s.p);ctx.globalAlpha=a;ctx.fillStyle='#e9e3fb';ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,6.28);ctx.fill()});
+    petals.forEach(function(p){
+      p.w+=.012;p.x+=p.vx+Math.sin(p.w)*.35;p.y+=p.vy;p.a+=p.va;
+      if(p.y>H+20){Object.assign(p,newPetal(true))}
+      ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.a);ctx.globalAlpha=.75;ctx.fillStyle=p.c;
+      ctx.shadowColor=p.c;ctx.shadowBlur=8;
+      ctx.beginPath();ctx.ellipse(0,0,p.s*.38,p.s,0,0,6.28);ctx.fill();ctx.restore();
+    });
+    ctx.globalAlpha=1;
+    if(!reduce) requestAnimationFrame(draw);
+  }
+  size();for(var i=0;i<(W<600?14:26);i++)petals.push(newPetal(false));
+  addEventListener('resize',size);
+  requestAnimationFrame(draw);
+})();
+</script>
+
+</body>
+</html>
